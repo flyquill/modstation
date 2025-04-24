@@ -36,3 +36,305 @@
     transform: rotate(360deg);
   }
 }
+
+
+My Custom CSS
+
+/* Custom styles for the navbar */
+.navbar-brand img {
+  max-height: 40px;
+  /* Adjust as needed */
+  margin-right: 10px;
+}
+
+.navbar-nav {
+  margin: 0 auto;
+  /* Center the nav items */
+}
+
+.navbar-nav .nav-item {
+  margin: 0 15px;
+  /* Add spacing between nav items */
+}
+
+#search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  /* Vertically center items */
+}
+
+#search-box {
+  position: absolute;
+  top: 100%;
+  /* Start below the navbar */
+  right: 0;
+  width: 200px;
+  /* Adjust as needed */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  margin-top: 10px;
+  /* Add space between navbar and searchbox */
+}
+
+#search-box.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.search-icon {
+  cursor: pointer;
+}
+
+:root {
+  --bs-darker: rgb(27, 26, 26);
+}
+
+.bg-darker {
+  background-color: var(--bs-darker) !important;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #1a1a1a;
+  color: #fff;
+}
+
+.full-width-image {
+  height: 200px;
+  object-fit: cover;
+  width: 100%;
+  display: block;
+}
+
+.car-card {
+  border: 1px solid #333;
+  border-radius: 0.25rem;
+  margin-bottom: 1.5rem;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  background-color: #252525;
+}
+
+.car-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.car-image-container {
+  /* height: 150px; */
+  /* overflow: hidden; */
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  width: 100%;
+  /* padding-bottom: 100%; */
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+}
+
+.car-image {
+  width: 100%;
+  /* height: 100%; */
+  object-fit: contain;
+  transition: transform 0.3s ease-in-out;
+  /* position: absolute;
+  top: 0;
+  left: 0; */
+  max-height: 140px;
+}
+
+.car-image-container:hover .car-image {
+  transform: scale(1.1);
+}
+
+.car-details {
+  padding: 1rem;
+}
+
+.btn-add-to-cart {
+  width: 100%;
+  border: none;
+  padding: 0.75rem 1rem;
+  /* background-color: #007bff; */
+  color: #fff;
+  font-size: 0.9rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.btn-add-to-cart:focus {
+  outline: none;
+  /* box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); */
+}
+
+.car-description {
+  font-size: 0.85rem;
+  color: #ddd;
+}
+
+.card-title {
+  color: #fff;
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+}
+
+.faq-section {
+  padding: 3rem 0;
+  background-color: #252525;
+  border-top: 1px solid #333;
+}
+
+.faq-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: #fff;
+}
+
+.faq-question {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+
+.faq-answer {
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+  color: #ddd;
+}
+
+.footer {
+  padding: 2rem 0;
+  background-color: #1a1a1a;
+  border-top: 1px solid #333;
+  color: #ddd;
+  text-align: center;
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.footer-link {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+
+.footer-link:hover {
+  color: #007bff;
+}
+
+.footer-text {
+  font-size: 0.9rem;
+}
+
+@media (max-width: 767.98px) {
+  .car-card {
+      margin-bottom: 1rem;
+  }
+
+  .footer-content {
+      flex-direction: column;
+  }
+}
+
+/* <!-- Fade-in Animation --> */
+@keyframes popFadeIn {
+  from {
+      opacity: 0;
+      transform: scale(0.95);
+  }
+  to {
+      opacity: 0.95;
+      transform: scale(1);
+  }
+}
+/* --- Underline Grow Animation --- */
+
+/* Style for the navbar links */
+.navbar-dark .navbar-nav .nav-link {
+  position: relative;
+  padding-bottom: 0.5rem;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+  color: #ccc;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Glowing underline effect */
+.navbar-dark .navbar-nav .nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #fff, #0ff, #fff); /* Neon gradient */
+  box-shadow: 0 0 8px #0ff;
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+/* Hover underline expansion and glow */
+.navbar-dark .navbar-nav .nav-link:hover::after,
+.navbar-dark .navbar-nav .nav-link:focus::after {
+  width: 80%;
+}
+
+/* Hover/focus text glow */
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link:focus {
+  color: #fff;
+  text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
+}
+
+/* Active link glowing like hover */
+.navbar-dark .navbar-nav .nav-link.active {
+  color: #fff;
+  text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
+}
+
+/* Active link underline always visible */
+.navbar-dark .navbar-nav .nav-link.active::after {
+  width: 80%;
+}
+
+.accordion-button {
+  color: white !important;
+  background-color: #212529 !important;
+}
+
+.accordion-button::after {
+  filter: invert(1); /* Makes the caret icon white */
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #343a40 !important;
+  color: #fff !important;
+  box-shadow: none;
+}
+
+
+@keyframes popFadeIn {
+  0% {
+      transform: scale(0.8);
+      opacity: 0;
+  }
+  100% {
+      transform: scale(1);
+      opacity: 0.95;
+  }
+}
