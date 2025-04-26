@@ -75,38 +75,6 @@ export default function Package() {
     }));
   };
 
-  const handleBuyNow = async () => {
-    if (!mainPackage?.id) return;
-
-    try {
-      const res = await fetch(`https://headless.tebex.io/api/checkout`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Tebex-Secret': token,
-        },
-        body: JSON.stringify({
-          packages: [
-            {
-              id: mainPackage.id,
-              quantity: 1
-            }
-          ]
-        })
-      });
-
-      const data = await res.json();
-
-      if (data && data.data && data.data.url) {
-        window.location.href = data.data.url; // Redirect to checkout
-      } else {
-        console.error("Checkout URL not found", data);
-      }
-    } catch (error) {
-      console.error("Buy Now error:", error);
-    }
-  };
-
 
   return (
     <>
@@ -134,8 +102,7 @@ export default function Package() {
               <div className="product-details">
                 <h1 className="product-name placeholder-glow"><span className='placeholder col-7'>Package Name</span></h1>
                 <p className="product-price placeholder-glow"><span className='placeholder col-4'>Package Price</span></p>
-                <button className="btn btn-primary mb-2 btn-add-to-cart disabled placeholder" ></button>
-                <button className="btn btn-success btn-add-to-cart disabled placeholder"></button>
+                <button className="btn btn-secondary mb-2 btn-add-to-cart disabled placeholder" ></button>
                 <div className="additional-section">
                   <div className="additional-section-image-container">
                     <svg className="bd-placeholder-img card-img-top" width="100%" height="100px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice">
@@ -148,7 +115,7 @@ export default function Package() {
                     <p className="product-price placeholder-glow"><span className='placeholder col-2'></span></p>
                   </div>
                   <div className="ms-auto">
-                    <button className="btn btn-primary btn-sm btn-add-to-cart disabled placeholder">Add to Cart</button>
+                    <button className="btn btn-secondary btn-sm btn-add-to-cart disabled placeholder">Add to Cart</button>
                   </div>
                 </div>
               </div>
@@ -181,7 +148,6 @@ export default function Package() {
                     Add to Cart
                   </button>
                 )}
-                <button className="btn btn-buy-now" onClick={handleBuyNow}>Buy Now</button>
                 <div className="additional-section">
                   <div className="additional-section-image-container">
                     <img src="/abc" alt="" className="additional-section-image" />

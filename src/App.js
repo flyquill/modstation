@@ -18,7 +18,7 @@ function App() {
   return (
     <Router>
       <Navbar />
-      <RandomAlert />
+      {/* <RandomAlert /> */}
       <GlobalAlert />
       <Routes>
         <Route exact path="/package" element={<Package />} />

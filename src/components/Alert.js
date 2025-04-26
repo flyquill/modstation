@@ -12,12 +12,12 @@ export default function Alert(props) {
         width: '380px',
         height: '110px',
         background: 'linear-gradient(135deg, #0f0f0f, #1a1a1a)',
-        border: '2px solid #00ff99',
+        border: '2px solid rgb(255, 0, 0)',
         borderRadius: '12px',
         display: 'flex',
         alignItems: 'center',
         padding: '12px',
-        boxShadow: '0 0 15px #00ff99',
+        boxShadow: '0 0 15px rgb(255, 0, 0)',
         zIndex: '1000',
         fontFamily: 'Orbitron, sans-serif',
         color: '#fff',
@@ -31,7 +31,7 @@ export default function Alert(props) {
         borderRadius: '8px',
         marginRight: '12px',
         objectFit: 'cover',
-        boxShadow: '0 0 8px #00ffcc'
+        boxShadow: '0 0 8px rgb(255, 0, 0)'
     }
 
     return (
@@ -39,9 +39,9 @@ export default function Alert(props) {
             <div style={mainDivStyle}>
                 <img src={props.image} id="packageImage" alt="Item Image" style={imgStyle} />
                 <div style={{ flexGrow: 1 }}>
-                    <strong id="packageName" style={{ fontSize: '1em', color: '#00ffcc' }}>{props.name}</strong>
+                    <strong id="packageName" style={{ fontSize: '1em', color: 'red' }}>{props.name}</strong>
                     <br />
-                    <span style={{ fontSize: '0.9em' }}>Price: $<span id="packagePrice" style={{ color: '#00ff99' }}>{props.price}</span></span>
+                    <span style={{ fontSize: '0.9em', color: 'red'}}> Price: $ <span id="packagePrice" style={{ color: 'red' }}>{props.price}</span></span>
                 </div>
             </div> : ''
         }

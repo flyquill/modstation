@@ -102,19 +102,19 @@ export default function Packages(props) {
                 <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                     {packages.map(pkg => (
                         <div className="col" key={pkg.id}>
-                            <div className="car-card">
+                            <div className="car-card" style={{backgroundColor: '#0B0909'}}>
                                 <Link to={`/package?id=${pkg.id}`} style={{ color: 'white', textDecoration: 'none' }}>
                                     <div className="car-image-container">
-                                        <img src={pkg.image} className="car-image" alt={pkg.name} style={{ minHeight: '140px' }} />
+                                        <img src={pkg.image} className="car-image" alt={pkg.name} style={{ minHeight: '259px' }} />
                                     </div>
                                 </Link>
                                 <div className="car-details">
                                     <h5 className="card-title">{pkg.name}</h5>
-                                    <p className="car-description" style={{ color: '#00ff00', fontWeight: 'bold' }}>
+                                    <p className="car-description" style={{ color: 'white', fontWeight: 'bold' }}>
                                         Price: ${pkg.total_price}
                                     </p>
                                     <button
-                                        className="btn btn-primary btn-sm btn-add-to-cart"
+                                        className="btn btn-danger btn-sm btn-add-to-cart"
                                         onClick={() => handleAddToCart(pkg.id, pkg.name, pkg.image, pkg.total_price)}
                                     >
                                         {cartItemIds.includes(pkg.id) ? 'View in Cart 🛒' : 'Add to Cart'}

@@ -10,7 +10,7 @@ export default function LoadingPlaceholders() {
         <div className="col" key={index}>
           <div className="car-card">
             <div className="car-image-container">
-              <svg className="bd-placeholder-img card-img-top" width="100%" height="140px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice">
+              <svg className="bd-placeholder-img card-img-top" width="100%" height="259px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice">
                 <title>Placeholder</title>
                 <rect width="100%" height="100%" fill="#404142"></rect>
               </svg>
@@ -22,7 +22,7 @@ export default function LoadingPlaceholders() {
               <p className="car-description placeholder-glow col-8">
                 <span className="placeholder col-12">aaa</span>
               </p>
-              <button className="btn btn-primary btn-sm btn-add-to-cart disabled placeholder"></button>
+              <button className="btn btn-secondary btn-sm btn-add-to-cart disabled placeholder"></button>
             </div>
           </div>
         </div>
