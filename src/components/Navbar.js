@@ -12,6 +12,7 @@ export default function Navbar() {
   ];
 
   const isActive = (id) => location.search === `?=${id}`;
+  const loggedInUser = localStorage.getItem('loggedInUser');
 
   return (
     <>
@@ -32,11 +33,11 @@ export default function Navbar() {
         {/* Social Media Buttons */}
         <div className="position-absolute bottom-0 start-0 m-3 d-flex gap-2" style={{ zIndex: 10 }}>
           <a className="btn btn-outline-light" href="https://discord.com/" target='_blank'>
-            <i class="bi bi-discord"> </i>
+            <i className="bi bi-discord"> </i>
             Discord
           </a>
           <a className="btn btn-outline-light" href="https://www.patreon.com/" target='_blank'>
-            <i class="bi bi-"> </i>
+            <i className="bi bi-"> </i>
             Patreon
           </a>
         </div>
@@ -86,6 +87,11 @@ export default function Navbar() {
                 <li className="nav-item">
                   <Link className="nav-link" to="/category?=custom">Custom</Link>
                 </li>
+                {loggedInUser ?
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/login">Admin</Link>
+                  </li>
+                : '' }
               </ul>
             </div>
           </div>

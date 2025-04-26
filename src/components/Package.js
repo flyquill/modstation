@@ -14,6 +14,9 @@ export default function Package() {
   const [loading, setLoading] = useState(true);
   const [renderKey, setRenderKey] = useState(0);
   const [cartItemIds, setCartItemIds] = useState([]);
+  const [attachedAddons, setAttachedAddons] = useState([]);
+  const [attachedAddonPackages, setAttachedAddonPackages] = useState([]);
+
   const navigate = useNavigate();
 
   const id = queryParams.get('id');
@@ -28,6 +31,7 @@ export default function Package() {
           const res = await fetch(`https://headless.tebex.io/api/accounts/${token}/packages/${id}`);
           const data = await res.json();
           setMainPackage(data.data);
+          await fetchAttachedAddons(data.data.id);
           await fetchCart(); // fetch cart after loading package
         } catch (err) {
           console.error("Error fetching packages:", err);
@@ -39,6 +43,33 @@ export default function Package() {
       fetchPackage();
     }
   }, [id, token]);
+
+  const databaseApiKey = process.env.REACT_APP_DATABASE_API_KEY;
+  const databaseApiUrl = process.env.REACT_APP_DATABASE_API_URL;
+
+  const fetchAttachedAddons = async (mainId) => {
+    try {
+      const res = await fetch(`${databaseApiUrl}getAddons.php?apiKey=${databaseApiKey}`);
+      const data = await res.json();
+
+      if (data.status === "success") {
+        const filtered = data.data.filter(addon => addon.main_package_id === parseInt(mainId));
+        setAttachedAddons(filtered);
+
+        // Now fetch each addon's full package data
+        const packagePromises = filtered.map(async (addon) => {
+          const res = await fetch(`https://headless.tebex.io/api/accounts/${token}/packages/${addon.addon_package_id}`);
+          const packageData = await res.json();
+          return packageData.data; // Returning the full package details
+        });
+
+        const packages = await Promise.all(packagePromises);
+        setAttachedAddonPackages(packages);
+      }
+    } catch (err) {
+      console.error("Error fetching attached addons:", err);
+    }
+  };
 
   const fetchCart = async () => {
     try {
@@ -58,8 +89,8 @@ export default function Package() {
 
   const handleAddToCart = () => {
     if (!mainPackage?.id) return;
-    if (getCookie('basket_ident') != null) {
-      window.location.href = '/auth';
+    if (!getCookie('basket_ident')) {
+      navigate('/auth');
       return;
     };
 
@@ -71,6 +102,25 @@ export default function Package() {
         name: mainPackage.name,
         image: mainPackage.image,
         price: mainPackage.base_price
+      }
+    }));
+  };
+
+  const handleAddonAddToCart = (pkg) => {
+    if (!pkg?.id) return;
+    if (!getCookie('basket_ident')) {
+      navigate('/auth');
+      return;
+    }
+
+    addToCartPackage(pkg.id);
+    setCartItemIds(prev => [...prev, pkg.id]);
+
+    window.dispatchEvent(new CustomEvent('show-alert', {
+      detail: {
+        name: pkg.name,
+        image: pkg.image,
+        price: pkg.base_price
       }
     }));
   };
@@ -103,6 +153,8 @@ export default function Package() {
                 <h1 className="product-name placeholder-glow"><span className='placeholder col-7'>Package Name</span></h1>
                 <p className="product-price placeholder-glow"><span className='placeholder col-4'>Package Price</span></p>
                 <button className="btn btn-secondary mb-2 btn-add-to-cart disabled placeholder" ></button>
+                <hr />
+                <h4 className='placeholder-glow'><span className='placeholder col-7'>Include Packages</span></h4>
                 <div className="additional-section">
                   <div className="additional-section-image-container">
                     <svg className="bd-placeholder-img card-img-top" width="100%" height="100px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice">
@@ -148,18 +200,32 @@ export default function Package() {
                     Add to Cart
                   </button>
                 )}
-                <div className="additional-section">
-                  <div className="additional-section-image-container">
-                    <img src="/abc" alt="" className="additional-section-image" />
-                  </div>
-                  <div className="additional-section-text">
-                    <h2 className="additional-section-title">title</h2>
-                    <p className="car-description">Price: $123</p>
-                  </div>
-                  <div className="ms-auto">
-                    <button className="btn btn-primary btn-sm btn-add-to-cart">Add to cart</button>
-                  </div>
-                </div>
+                {attachedAddonPackages.length > 0 && (
+                  <>
+                    <hr />
+                    <h4>Included Addons <a href="#faq"><small style={{fontSize: '12px'}}>What is Addons?</small></a></h4>
+                    {attachedAddonPackages.map(pkg => (
+                      <div className="additional-section" key={pkg.id}>
+                        <div className="additional-section-image-container">
+                          <img src={pkg.image} alt="" className="additional-section-image" />
+                        </div>
+                        <div className="additional-section-text">
+                          <h2 className="additional-section-title">{pkg.name}</h2>
+                          <p className="car-description">Price: ${pkg.total_price}</p>
+                        </div>
+                        <div className="ms-auto">
+                          <button
+                            className="btn btn-secondary btn-sm btn-add-to-cart"
+                            onClick={() => handleAddonAddToCart(pkg)}
+                          >
+                            {cartItemIds.includes(pkg.id) ? 'View in Cart 🛒' : 'Add to Cart'}
+                          </button>
+
+                        </div>
+                      </div>
+                    ))}
+                  </>
+                )}
               </div>
             </div>
           </div>

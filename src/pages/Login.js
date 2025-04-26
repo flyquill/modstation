@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import Categories from '../components/Categories';
+import Addons from '../components/Addons';
 
 export default function Login() {
   const [formData, setFormData] = useState({ username: '', password: '' });
@@ -49,10 +51,14 @@ export default function Login() {
 
   if (loggedInUser) {
     return (
-      <div className="container mt-5">
-        <h4>Hello {loggedInUser.username}</h4>
-        <button onClick={handleLogout} className="btn btn-danger">Logout</button>
-      </div>
+      <>
+        <div className="container mt-5">
+          <h4>Hello {loggedInUser.username}</h4>
+          <button onClick={handleLogout} className="btn btn-danger">Logout</button>
+        </div>
+
+        <Categories />
+      </>
     );
   }
 

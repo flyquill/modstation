@@ -102,7 +102,7 @@ export default function Footer() {
 
 
 
-            <section className="faq-section" style={{ backgroundColor: '#0B0909', color: '#fff', padding: '60px 0' }}>
+            <section className="faq-section" id='faq' style={{ backgroundColor: '#0B0909', color: '#fff', padding: '60px 0' }}>
                 <div className="container">
                     <h2 className="text-center mb-4">
                         <span className="line" style={{ color: 'red' }}><strong>──</strong></span>{' '}

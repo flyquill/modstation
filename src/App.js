@@ -1,10 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
 import Navbar from './components/Navbar';
-import RandomAlert from './components/RandomAlert';
+// import RandomAlert from './components/RandomAlert';
 import Home from './pages/Home';
 import About from './pages/About';
-import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Footer from './components/Footer';
 import Cart from './pages/Cart';
 import GlobalAlert from './components/GlobalAlert';
@@ -19,15 +19,18 @@ function App() {
     <Router>
       <Navbar />
       {/* <RandomAlert /> */}
+      {/* Decorative curly lines */}
+      {/* <div className="curly-line left-curly" />
+      <div className="curly-line right-curly" /> */}
       <GlobalAlert />
       <Routes>
-        <Route exact path="/package" element={<Package />} />
-        <Route exact path="/about" element={<About />} />
-        <Route exact path="/cart" element={<Cart />} />
-        <Route exact path="/category" element={<Categories />} />
-        <Route exact path="/login" element={<Login />} />
-        <Route exact path="/auth" element={<Auth />} />
-        <Route exact path="/" element={<Home />} />
+        <Route path="/package" element={<Package />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/category" element={<Categories />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/auth" element={<Auth />} />
+        <Route path="/" element={<Home />} />
       </Routes>
       <Footer />
     </Router>
