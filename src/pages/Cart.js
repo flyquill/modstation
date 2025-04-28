@@ -7,10 +7,13 @@ export default function Cart() {
 
     const token = process.env.REACT_APP_TEBEX_PUBLIC_API_KEY;
     const basketIdent = getCookie('basket_ident');
+    const databaseApiUrl = process.env.REACT_APP_DATABASE_API_URL;
+    const databaseApiKey = process.env.REACT_APP_DATABASE_API_KEY;
 
     const [cartItems, setCartItems] = useState([]);
     const [checkoutLink, setCheckoutLink] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [customData, setCustomData] = useState({});
 
     const cartItemStyles = {
         backgroundColor: '#1e1e1e',
@@ -30,15 +33,11 @@ export default function Cart() {
     }
 
     const handleRemove = (pkgId) => {
-        // Optimistically filter out the package
         const updatedPackages = cartItems.packages.filter(pkg => pkg.id !== pkgId);
-
-        // Recalculate totals
         const newBasePrice = updatedPackages.reduce((sum, pkg) => sum + pkg.in_basket.price, 0);
-        const newSalesTax = 0; // Adjust if you have a formula for sales tax
+        const newSalesTax = 0;
         const newTotalPrice = newBasePrice + newSalesTax;
 
-        // Update state
         setCartItems(prev => ({
             ...prev,
             packages: updatedPackages,
@@ -47,40 +46,66 @@ export default function Cart() {
             total_price: newTotalPrice
         }));
 
-        // Call API to remove from backend
         removeFromBasket(pkgId, basketIdent, token)
             .then(result => {
                 if (!result.success) {
                     console.error('Failed to remove from basket:', result.error);
-                    // Optionally restore item here
                 }
             })
             .catch(err => console.error('Remove error:', err));
     };
 
+    const fetchCustomData = async (pkgId) => {
+        try {
+            const response = await fetch(`${databaseApiUrl}get_packages.php?package_id=${pkgId}&api_key=${databaseApiKey}`);
+            const data = await response.json();
+            if (!data.error) {
+                return data;
+            }
+        } catch (error) {
+            console.error(`Error fetching custom data for package ${pkgId}:`, error);
+        }
+        return null;
+    };
 
     useEffect(() => {
-        
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        // Fetch data from API
-        fetch(`https://headless.tebex.io/api/accounts/${token}/baskets/${basketIdent}`)
-            .then(res => res.json())
-            .then(data => {
+
+        const loadCart = async () => {
+            try {
+                const res = await fetch(`https://headless.tebex.io/api/accounts/${token}/baskets/${basketIdent}`);
+                const data = await res.json();
                 if (data.data.packages.length > 0) {
-                    setCartItems(data.data);       // store data in state
-                    setCheckoutLink(data.data.links.checkout);       // store data in state
+                    setCartItems(data.data);
+                    setCheckoutLink(data.data.links.checkout);
+
+                    // Fetch custom data for all packages in cart
+                    const customResults = await Promise.all(
+                        data.data.packages.map(pkg => fetchCustomData(pkg.id))
+                    );
+
+                    const customDataObj = {};
+                    data.data.packages.forEach((pkg, index) => {
+                        if (customResults[index]) {
+                            customDataObj[pkg.id] = customResults[index];
+                        }
+                    });
+
+                    setCustomData(customDataObj);
                 }
-                setLoading(false);    // turn off loading state
-            })
-            .catch(err => {
+            } catch (err) {
                 console.error(err);
+            } finally {
                 setLoading(false);
-            });
-    }, []); // Empty dependency array = run once on mount
+            }
+        };
+
+        loadCart();
+
+    }, []);
 
     return (
         <>
-
             <div>
                 <div className="container py-5">
                     <h2 className="mb-4" style={{ color: '#0ff' }}>Your Cart</h2>
@@ -111,41 +136,48 @@ export default function Cart() {
                         </>
                     ) : (
                         <>
-                            {/* <!-- Cart Item --> */}
                             {cartItems.packages && cartItems.packages.length > 0 ? (
-                                cartItems.packages.map(pkg => (
-                                    <div className="row align-items-center" key={pkg.id} style={cartItemStyles}>
-                                        <div className="col-md-2">
-                                            <Link to={`/package?id=${pkg.id}`}>
-                                                <img src={pkg.image} className="img-fluid" alt="Game Image" style={{ borderRadius: '8px', height: '100px' }} />
-                                            </Link>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <Link to={`/package?id=${pkg.id}`} style={{textDecoration: 'none', color: '#fff'}}>
-                                                <h5>{pkg.name}</h5>
-                                            </Link>
-                                        </div>
-                                        <div className="col-md-2 text-start">
-                                            <p style={{ color: '#00ff00' }}>Price: ${pkg.in_basket.price}</p>
-                                        </div>
-                                        <div className="col-md-2 text-end">
-                                            <div className="cart-item row align-items-center">
-                                                <button className="btn btn-danger btn-sm remove-btn" onClick={() => handleRemove(pkg.id)}>Remove</button>
+                                cartItems.packages.map(pkg => {
+                                    const custom = customData[pkg.id];
+
+                                    const title = custom && custom.package_title ? custom.package_title : pkg.name;
+                                    const images = custom && custom.package_images && custom.package_images.length > 0
+                                        ? custom.package_images
+                                        : [pkg.image];
+
+                                    const imageUrl = images[0].startsWith('http') ? images[0] : `${databaseApiUrl}uploads/${images[0]}`;
+
+                                    return (
+                                        <div className="row align-items-center" key={pkg.id} style={cartItemStyles}>
+                                            <div className="col-md-2">
+                                                <Link to={`/package?id=${pkg.id}`}>
+                                                    <img src={imageUrl} className="img-fluid" alt={title} style={{ borderRadius: '8px', height: '100px', objectFit: 'cover' }} />
+                                                </Link>
+                                            </div>
+                                            <div className="col-md-6">
+                                                <Link to={`/package?id=${pkg.id}`} style={{ textDecoration: 'none', color: '#fff' }}>
+                                                    <h5>{title}</h5>
+                                                </Link>
+                                            </div>
+                                            <div className="col-md-2 text-start">
+                                                <p style={{ color: '#00ff00' }}>Price: ${pkg.in_basket.price}</p>
+                                            </div>
+                                            <div className="col-md-2 text-end">
+                                                <div className="cart-item row align-items-center">
+                                                    <button className="btn btn-danger btn-sm remove-btn" onClick={() => handleRemove(pkg.id)}>Remove</button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                ))
+                                    )
+                                })
                             ) : (
                                 <div className="row align-items-center" style={cartItemStyles}>
                                     Your Cart is Empty! 😀
                                 </div>
                             )}
+                        </>
+                    )}
 
-                        </>)}
-
-                    {/* <!-- Repeat cart item if needed --> */}
-
-                    {/* <!-- Cart Summary --> */}
                     <div className="row mt-4">
                         <div className="col-md-6 offset-md-6">
                             <div className="p-3 border rounded-3" style={{ backgroundColor: '#1e1e1e' }}>
