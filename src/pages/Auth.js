@@ -20,11 +20,8 @@ export default function Auth() {
               "Content-Type": "application/json"
             },
             body: JSON.stringify({
-              complete_url: "http://localhost:3000/",
-              cancel_url: "http://localhost:3000/",
-              custom: {
-                order_source: "gta_sp",
-              },
+              complete_url: "https://gtamodstation.com/",
+              cancel_url: "https://gtamodstation.com/",
               complete_auto_redirect: true,
               player: { type: "fivem" }
             })
@@ -36,7 +33,7 @@ export default function Auth() {
             basketIdent = data.data.ident;
             setCookie(cookieName, basketIdent);
 
-            const authResponse = await fetch(`https://headless.tebex.io/api/accounts/${token}/baskets/${basketIdent}/auth?returnUrl=http://localhost:3000?basketVerified=true`);
+            const authResponse = await fetch(`https://headless.tebex.io/api/accounts/${token}/baskets/${basketIdent}/auth?returnUrl=https://gtamodstation.com?basketVerified=true`);
             const authData = await authResponse.json();
 
             if (Array.isArray(authData) && authData[0]?.url) {
@@ -68,12 +65,12 @@ export default function Auth() {
 
   return (
     <div className="container my-5">
-      <h3 className="my-5">You need to login with your CFX account</h3>
+      <h3 className="my-5">Please login using your CFX.re account so we can identify you in game</h3>
       <button className="btn btn-success d-flex align-items-center gap-2" onClick={handleAuthorize} disabled={loading}>
         {loading && (
           <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
         )}
-        {loading ? 'Authorizing...' : 'Authorize with cfx.re'}
+        {loading ? 'Authorizing...' : 'Login with FiveM'}
       </button>
     </div>
   );

@@ -103,15 +103,15 @@ export default function Packages(props) {
                     {packages.map(pkg => (
                         <div className="col" key={pkg.id}>
                             <div className="car-card" style={{backgroundColor: '#0B0909'}}>
-                                <Link to={`/package?id=${pkg.id}`} style={{ color: 'white', textDecoration: 'none' }}>
+                                <Link to={`/package?id=${pkg.id}&categoryId=${pkg.category.id}`} style={{ color: 'white', textDecoration: 'none' }}>
                                     <div className="car-image-container">
-                                        <img src={pkg.image} className="car-image" alt={pkg.name} style={{ minHeight: '259px' }} />
+                                        <img src={pkg.image} className="car-image" alt={pkg.name} style={{ height: '259px' }} />
                                     </div>
                                 </Link>
                                 <div className="car-details">
                                     <h5 className="card-title">{pkg.name}</h5>
                                     <p className="car-description" style={{ color: 'white', fontWeight: 'bold' }}>
-                                        Price: ${pkg.total_price}
+                                        Price: ${pkg.total_price }
                                     </p>
                                     <button
                                         className="btn btn-danger btn-sm btn-add-to-cart"

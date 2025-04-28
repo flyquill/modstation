@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import mainImage from '../images/home.jpg';
+// import mobileBanner from '../images/mobile.jpg';
 import logo from '../images/logo.png';
 import { Link, useLocation } from 'react-router-dom';
 
 export default function Navbar() {
   const location = useLocation();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleNavbar = () => {
+    setIsOpen(!isOpen);
+  };
 
   const categories = [
     { id: 2909711, name: 'Free' },
@@ -17,7 +23,7 @@ export default function Navbar() {
   return (
     <>
       <Link
-        className="btn btn-outline-light position-fixed top-0 end-0 m-3 z-1030"
+        className="btn btn-outline-light position-fixed top-0 end-0 m-3 z-1030 cart-btn"
         id="cartToggleBtn"
         style={{ zIndex: 999 }}
         to="/cart"
@@ -27,6 +33,9 @@ export default function Navbar() {
           id="cartCount"
           className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
         ></span>
+        {/* <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+          0
+        </span> */}
       </Link>
 
       <div className="position-relative">
@@ -43,11 +52,12 @@ export default function Navbar() {
         </div>
 
         {/* Main Image */}
-        <img src={mainImage} className="full-width-image mb-0" alt="Full Width" style={{ marginLeft: '-1px' }} />
+        <img src={mainImage} className="full-width-image mb-0" id="desktopBanner" alt="Full Width" style={{ marginLeft: '-1px' }} />
+        <img src={mainImage} className="full-width-image mb-0" id="mobileBanner" alt="Full Width" style={{ marginLeft: '-1px', display: 'none' }} />
       </div>
 
 
-      <nav className="navbar navbar-dark navbar-expand-lg" style={{
+      <nav className="navbar navbar-dark navbar-expand-lg" id='desktopNavbar' style={{
         backgroundColor: '#0B0909',
         border: '2px solid rgb(255, 0, 0)',
         borderLeft: '0',
@@ -91,7 +101,7 @@ export default function Navbar() {
                   <li className="nav-item">
                     <Link className="nav-link" to="/login">Admin</Link>
                   </li>
-                : '' }
+                  : ''}
               </ul>
             </div>
           </div>
@@ -102,6 +112,71 @@ export default function Navbar() {
           </div>
         </div>
       </nav >
+
+      {/* Mobile navbar */}
+      <nav className="navbar navbar-dark navbar-expand-lg" id="mobileNavbar" style={{
+        backgroundColor: 'rgba(11, 9, 9, 0.9)',
+        borderTop: '2px solid red',
+        borderBottom: '2px solid red',
+        padding: '0.5rem',
+        position: 'sticky',
+        top: '0',
+        zIndex: '1000',
+        display: 'none'
+      }}>
+        <div className="container-fluid">
+
+          {/* Logo */}
+          <Link className="navbar-brand d-flex align-items-center" to="/" style={{ padding: '0', margin: '0' }}>
+            <img src={logo} style={{ width: '50px', height: '50px', objectFit: 'cover', borderRadius: '50%' }} alt="Logo" />
+          </Link>
+
+          {/* Navbar toggler */}
+          <button
+            className="navbar-toggler"
+            type="button"
+            onClick={toggleNavbar}
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+
+          {/* Collapsible links */}
+          <div className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`} id="navbarMobile">
+            <ul className="navbar-nav ms-auto text-center">
+
+              <li className="nav-item">
+                <Link className={`nav-link ${location.pathname === '/' ? 'active' : ''}`} to="/">Home</Link>
+              </li>
+
+              {categories.map(category => (
+                <li className="nav-item" key={category.id}>
+                  <Link
+                    className={`nav-link ${isActive(category.id) ? 'active' : ''}`}
+                    to={`/category?id=${category.id}`}
+                  >
+                    {category.name}
+                  </Link>
+                </li>
+              ))}
+
+              <li className="nav-item">
+                <Link className="nav-link" to="/category?=fivem">FiveM</Link>
+              </li>
+
+              <li className="nav-item">
+                <Link className="nav-link" to="/category?=custom">Custom</Link>
+              </li>
+
+              {loggedInUser && (
+                <li className="nav-item">
+                  <Link className="nav-link" to="/login">Admin</Link>
+                </li>
+              )}
+            </ul>
+          </div>
+
+        </div>
+      </nav>
     </>
   );
 }

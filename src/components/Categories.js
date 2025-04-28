@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import LoadingPlaceholders from './LoadingPlaceholders';
 import Addons from '../components/Addons';
 
@@ -7,6 +7,8 @@ export default function Categories(props) {
     const alertTimeoutRef = useRef(null);
 
     const token = process.env.REACT_APP_TEBEX_PUBLIC_API_KEY;
+
+    const navigate = useNavigate();
 
     const [categories, setCategories] = useState([]);
     const [modalTitle, setModalTitle] = useState('');
@@ -32,6 +34,7 @@ export default function Categories(props) {
     }
 
     useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         const loadAll = async () => {
             await fetchCategories();
         };
@@ -67,6 +70,9 @@ export default function Categories(props) {
                                             </p>
                                             <button type="button" onClick={() => { handleLinkAddon(pkg.id, pkg.name) }} className="btn btn-danger btn-sm btn-add-to-cart" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                                 Link Addons
+                                            </button>
+                                            <button type="button" onClick={ () => {navigate(`/packageManagement?id=${pkg.id}`)} } className="btn btn-danger btn-sm btn-add-to-cart">
+                                                Manage this package
                                             </button>
                                         </div>
                                     </div>

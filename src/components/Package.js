@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom';
 import '../utils/css/package.css';
 import Packages from './Packages';
 import { addToCartPackage, getCookie } from '../utils/cartUtils';
-import { useNavigate } from 'react-router-dom'; // also import this if not already
+import { useNavigate, useLocation } from 'react-router-dom'; // also import this if not already
 
 export default function Package() {
 
@@ -12,31 +11,33 @@ export default function Package() {
   const queryParams = new URLSearchParams(location.search);
   const [mainPackage, setMainPackage] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [addonLoading, setAddonLoading] = useState(true);
   const [renderKey, setRenderKey] = useState(0);
   const [cartItemIds, setCartItemIds] = useState([]);
-  const [attachedAddons, setAttachedAddons] = useState([]);
+  // const [attachedAddons, setAttachedAddons] = useState([]);
   const [attachedAddonPackages, setAttachedAddonPackages] = useState([]);
 
   const navigate = useNavigate();
 
   const id = queryParams.get('id');
+  const categoryId = queryParams.get('categoryId');
 
   useEffect(() => {
     if (token && id) {
       const fetchPackage = async () => {
         try {
           setLoading(true);
+          setAddonLoading(true);
           setRenderKey(prev => prev + 1);
           window.scrollTo({ top: 0, behavior: 'smooth' });
           const res = await fetch(`https://headless.tebex.io/api/accounts/${token}/packages/${id}`);
           const data = await res.json();
           setMainPackage(data.data);
+          setLoading(false);
           await fetchAttachedAddons(data.data.id);
           await fetchCart(); // fetch cart after loading package
         } catch (err) {
           console.error("Error fetching packages:", err);
-        } finally {
-          setLoading(false);
         }
       };
 
@@ -54,7 +55,7 @@ export default function Package() {
 
       if (data.status === "success") {
         const filtered = data.data.filter(addon => addon.main_package_id === parseInt(mainId));
-        setAttachedAddons(filtered);
+        // setAttachedAddons(filtered);
 
         // Now fetch each addon's full package data
         const packagePromises = filtered.map(async (addon) => {
@@ -65,6 +66,8 @@ export default function Package() {
 
         const packages = await Promise.all(packagePromises);
         setAttachedAddonPackages(packages);
+
+        setAddonLoading(false);
       }
     } catch (err) {
       console.error("Error fetching attached addons:", err);
@@ -125,7 +128,6 @@ export default function Package() {
     }));
   };
 
-
   return (
     <>
       {loading ?
@@ -133,7 +135,7 @@ export default function Package() {
           <div className="row">
             <div className="col-md-6">
               <div className="product-image-container">
-                <svg className="bd-placeholder-img card-img-top" width="100%" height="400px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice">
+                <svg className="bd-placeholder-img card-img-top product-image" width="100%" height="400px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice">
                   <title>Placeholder</title>
                   <rect width="100%" height="100%" fill="#404142" />
                 </svg>
@@ -200,41 +202,87 @@ export default function Package() {
                     Add to Cart
                   </button>
                 )}
-                {attachedAddonPackages.length > 0 && (
-                  <>
-                    <hr />
-                    <h4>Included Addons <a href="#faq"><small style={{fontSize: '12px'}}>What is Addons?</small></a></h4>
-                    {attachedAddonPackages.map(pkg => (
-                      <div className="additional-section" key={pkg.id}>
-                        <div className="additional-section-image-container">
-                          <img src={pkg.image} alt="" className="additional-section-image" />
-                        </div>
-                        <div className="additional-section-text">
-                          <h2 className="additional-section-title">{pkg.name}</h2>
-                          <p className="car-description">Price: ${pkg.total_price}</p>
-                        </div>
-                        <div className="ms-auto">
-                          <button
-                            className="btn btn-secondary btn-sm btn-add-to-cart"
-                            onClick={() => handleAddonAddToCart(pkg)}
-                          >
-                            {cartItemIds.includes(pkg.id) ? 'View in Cart 🛒' : 'Add to Cart'}
-                          </button>
-
-                        </div>
+                <hr />
+                {!addonLoading ?
+                  attachedAddonPackages.length > 0 && (
+                    <>
+                      <h4>Included Addons <a href="#faq"><small style={{ fontSize: '12px' }}>What is Addons?</small></a></h4>
+                      <div
+                        className="addon-container"
+                        style={{
+                          maxHeight: '250px', // Always limit the height of the container
+                          overflowY: 'auto', // Always add scrolling
+                        }}
+                      >
+                        {attachedAddonPackages.map(pkg => (
+                          <div className="additional-section" key={pkg.id} style={{ height: '85px' }}>
+                            <div className="additional-section-image-container">
+                              <img src={pkg.image} alt="" className="additional-section-image" />
+                            </div>
+                            <div className="additional-section-text">
+                              <h2 className="additional-section-title">{pkg.name}</h2>
+                              <p className="car-description">Price: ${pkg.total_price}</p>
+                            </div>
+                            <div className="ms-auto" style={{ marginRight: '1rem' }}>
+                              {cartItemIds.includes(pkg.id) ?
+                                <button
+                                  className="btn btn-secondary btn-sm btn-add-to-cart"
+                                  onClick={() => navigate('/cart')}
+                                >
+                                  View in Cart 🛒
+                                </button> :
+                                <button
+                                  className="btn btn-secondary btn-sm btn-add-to-cart"
+                                  onClick={() => handleAddonAddToCart(pkg)}
+                                >
+                                  Add to Cart
+                                </button>}
+                            </div>
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </>
-                )}
+                    </>
+                  )
+                  :
+                  <>
+                    <h4 className='placeholder-glow'><span className='placeholder col-7'>Include Packages</span></h4>
+                    <div
+                      className="addon-container"
+                      style={{
+                        maxHeight: '250px', // Always limit the height of the container
+                        overflowY: 'auto', // Always add scrolling
+                      }}
+                    >
+                      {Array.from({ length: 3 }).map((_, index) => (
+                        <>
+                          <div className="additional-section" style={{ height: '85px' }}>
+                            <div className="additional-section-image-container">
+                              <svg className="bd-placeholder-img card-img-top" width="100%" height="100px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice">
+                                <title>Placeholder</title>
+                                <rect width="100%" height="100%" fill="#404142"  style={{ height: '75px' }}></rect>
+                              </svg>
+                            </div>
+                            <div className="additional-section-text">
+                              <h2 className="additional-section-title placehlder-glow"><span className='placeholder col-4'>Title</span></h2>
+                              <p className="product-price placeholder-glow"><span className='placeholder col-2'></span></p>
+                            </div>
+                            <div className="ms-auto" style={{ marginRight: '1rem' }}>
+                              <button className="btn btn-secondary btn-sm btn-add-to-cart disabled placeholder">Add to Cart</button>
+                            </div>
+                          </div>
+                        </>
+                      ))}
+                    </div>
+                  </>}
               </div>
             </div>
           </div>
         </div>
       }
       <div className="container mt-4">
-        <h2>Related Products</h2>
+        <h2>More Packages</h2>
       </div>
-      <Packages key={renderKey} exceptPackage={id} />
+      <Packages key={renderKey} exceptPackage={id} category={categoryId} />
     </>
   )
 }

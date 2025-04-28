@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { getCookie } from '../utils/cartUtils'
 import { removeFromBasket } from '../utils/removeFromBasket';
+import { Link } from 'react-router-dom';
 
 export default function Cart() {
 
@@ -19,8 +20,8 @@ export default function Cart() {
     }
 
     const checkoutBtnStyles = {
-        backgroundColor: '#0ff',
-        color: '#000',
+        backgroundColor: '#red',
+        color: '#fff',
         border: 'none'
     }
 
@@ -59,6 +60,8 @@ export default function Cart() {
 
 
     useEffect(() => {
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         // Fetch data from API
         fetch(`https://headless.tebex.io/api/accounts/${token}/baskets/${basketIdent}`)
             .then(res => res.json())
@@ -113,10 +116,14 @@ export default function Cart() {
                                 cartItems.packages.map(pkg => (
                                     <div className="row align-items-center" key={pkg.id} style={cartItemStyles}>
                                         <div className="col-md-2">
-                                            <img src={pkg.image} className="img-fluid" alt="Game Image" style={{ borderRadius: '8px', height: '100px' }} />
+                                            <Link to={`/package?id=${pkg.id}`}>
+                                                <img src={pkg.image} className="img-fluid" alt="Game Image" style={{ borderRadius: '8px', height: '100px' }} />
+                                            </Link>
                                         </div>
                                         <div className="col-md-6">
-                                            <h5>{pkg.name}</h5>
+                                            <Link to={`/package?id=${pkg.id}`} style={{textDecoration: 'none', color: '#fff'}}>
+                                                <h5>{pkg.name}</h5>
+                                            </Link>
                                         </div>
                                         <div className="col-md-2 text-start">
                                             <p style={{ color: '#00ff00' }}>Price: ${pkg.in_basket.price}</p>
@@ -156,7 +163,7 @@ export default function Cart() {
                                     <span>Total</span>
                                     <span>${cartItems.total_price ? cartItems.total_price.toLocaleString() : 0}</span>
                                 </div>
-                                <button className={`btn w-100 mt-3 ${cartItems.packages && cartItems.packages.length > 0 ? '' : 'disabled'}`} style={checkoutBtnStyles} onClick={procedToCheckout}>Proceed to Checkout</button>
+                                <button className={`btn btn-danger w-100 mt-3 ${cartItems.packages && cartItems.packages.length > 0 ? '' : 'disabled'}`} style={checkoutBtnStyles} onClick={procedToCheckout}>Proceed to Checkout</button>
                             </div>
                         </div>
                     </div>

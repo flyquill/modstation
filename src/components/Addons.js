@@ -55,11 +55,11 @@ export default function Addons(props) {
                 if (isAttached) {
                     // ✅ Successfully detached
                     setAttachedPackages(prev => prev.filter(id => id !== currentPackage));
-                    console.log('Detached');
+                    // console.log('Detached');
                 } else {
                     // ✅ Successfully attached
                     setAttachedPackages(prev => [...prev, currentPackage]);
-                    console.log('Attached');
+                    // console.log('Attached');
                 }
             } else {
                 console.error(data);

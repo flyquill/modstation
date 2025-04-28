@@ -102,7 +102,7 @@ body {
 }
 
 .full-width-image {
-  height: 200px;
+  height: 319px;
   object-fit: cover;
   width: 100%;
   display: block;
@@ -144,7 +144,7 @@ body {
   /* position: absolute;
   top: 0;
   left: 0; */
-  max-height: 140px;
+  /* max-height: 140px; */
 }
 
 /* .car-image-container:hover .car-image {
@@ -243,6 +243,33 @@ body {
 @media (max-width: 767.98px) {
   .car-card {
       margin-bottom: 1rem;
+  }
+  .cart-btn{
+    display: none;
+  }
+
+  #desktopBanner{
+    display: none;
+  }
+
+  #mobileBanner{
+    display: block;
+  }
+
+  #mobileNavbar{
+    display: block!important;
+  }
+
+  #desktopNavbar{
+    display: none;
+  }
+
+  .car-image{
+    height: 217px!important;
+  }
+
+  .product-image{
+    height: 219px!important;
   }
 
   .footer-content {
