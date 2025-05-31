@@ -61,7 +61,7 @@ export default function Login() {
         <div className="container mt-5">
           <h4>Hello {loggedInUser.username}</h4>
           <button onClick={handleLogout} className="btn btn-danger">Logout</button>
-          <button onClick={() => {navigate('/packageManagement')}} className="btn btn-primary mx-2">Package Manager</button>
+          <button onClick={() => {navigate('/editMenu')}} className="btn btn-primary mx-2">Edit Menus</button>
         </div>
         <Categories />
       </>

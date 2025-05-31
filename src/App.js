@@ -13,6 +13,7 @@ import Categories from './pages/Categories';
 import Login from './pages/Login';
 import Auth from './pages/Auth';
 import UploadPackageForm from './pages/PackageManagement';
+import Contact from './pages/Contact';
 
 function App() {
 
@@ -31,6 +32,7 @@ function App() {
         <Route path="/category" element={<Categories />} />
         <Route path="/login" element={<Login />} />
         <Route path="/auth" element={<Auth />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="/packageManagement" element={<UploadPackageForm />} />
         <Route path="/" element={<Home />} />
       </Routes>

@@ -97,6 +97,9 @@ export default function Navbar() {
                 <li className="nav-item">
                   <Link className="nav-link" to="/category?=custom">Custom</Link>
                 </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/contact">Contact Us</Link>
+                </li>
                 {loggedInUser ?
                   <li className="nav-item">
                     <Link className="nav-link" to="/login">Admin</Link>
