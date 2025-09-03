@@ -40,6 +40,8 @@ const ContactUs = () => {
         }
     };
 
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
     return (
         <div className="container my-5">
             <div className="row justify-content-center">

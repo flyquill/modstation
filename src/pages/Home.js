@@ -15,7 +15,7 @@ export default function Home() {
 
   return (
     <>
-        <h2 className='text-center my-5'>Featured For You! 😉</h2>
+        <h2 className='text-center my-5'>Featured For You!</h2>
         <Packages exceptPackage={false}/>
     </>
   )

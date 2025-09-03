@@ -41,11 +41,11 @@ export default function Navbar() {
       <div className="position-relative">
         {/* Social Media Buttons */}
         <div className="position-absolute bottom-0 start-0 m-3 d-flex gap-2" style={{ zIndex: 10 }}>
-          <a className="btn btn-outline-light" href="https://discord.com/" target='_blank'>
+          {/* <a className="btn btn-outline-light" href="https://discord.com/" target='_blank'>
             <i className="bi bi-discord"> </i>
             Discord
-          </a>
-          <a className="btn btn-outline-light" href="https://www.patreon.com/" target='_blank'>
+          </a> */}
+          <a className="btn btn-outline-light" href="https://patreon.com/u81768126" target='_blank'>
             <i className="bi bi-"> </i>
             Patreon
           </a>
@@ -95,7 +95,7 @@ export default function Navbar() {
                   <Link className="nav-link" to="/category?=fivem">FiveM</Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/category?=custom">Custom</Link>
+                  <Link className="nav-link" to="/custom">Develop Own Model</Link>
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link" to="/contact">Contact Us</Link>
@@ -161,15 +161,15 @@ export default function Navbar() {
                   </Link>
                 </li>
               ))}
-
               <li className="nav-item">
                 <Link className="nav-link" to="/category?=fivem">FiveM</Link>
               </li>
-
               <li className="nav-item">
-                <Link className="nav-link" to="/category?=custom">Custom</Link>
+                <Link className="nav-link" to="/category?=custom">Develop Own Model</Link>
               </li>
-
+              <li className="nav-item">
+                <Link className="nav-link" to="/contact">Contact Us</Link>
+              </li>
               {loggedInUser && (
                 <li className="nav-item">
                   <Link className="nav-link" to="/login">Admin</Link>

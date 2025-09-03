@@ -3,6 +3,7 @@ import '../utils/css/package.css';
 import Packages from './Packages';
 import { addToCartPackage, getCookie } from '../utils/cartUtils';
 import { useNavigate, useLocation } from 'react-router-dom'; // also import this if not already
+import ProductDescription from './ProductDescription';
 
 export default function Package() {
 
@@ -31,7 +32,7 @@ export default function Package() {
           setLoading(true);
           setAddonLoading(true);
           setRenderKey(prev => prev + 1);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+          window.scrollTo({ top: 300, behavior: 'smooth' });
 
           // Fetch custom details for all packages in parallel
           const customApiData = await fetchCustomData(id);
@@ -275,7 +276,7 @@ export default function Package() {
                   </button>
                 )}
                 <hr />
-                {!addonLoading ?
+                {addonLoading ?
                   attachedAddonPackages.length > 0 && (
                     <>
                       <h4>Included Addons <a href="#faq"><small style={{ fontSize: '12px' }}>What is Addons?</small></a></h4>
@@ -349,6 +350,8 @@ export default function Package() {
           </div>
         </div>
       }
+      <br />
+      <ProductDescription description={mainPackage.description} />
       <div className="container mt-4">
         <h2>More Packages</h2>
       </div>

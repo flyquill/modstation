@@ -32,6 +32,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -97,8 +98,19 @@ My Custom CSS
 
 body {
   font-family: 'Inter', sans-serif;
-  background-color: #0B0909;
+  background-color: #0b0909;
   color: #fff;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  /* background-image: url("./images/background.jpg"); */
+  /* Path to your image */
+  /* background-size: cover; */
+  /* Make it cover the entire screen */
+  /* background-position: center; */
+  /* Center the image */
+  /* background-repeat: no-repeat; */
+  /* Prevent tiling */
 }
 
 .full-width-image {
@@ -242,52 +254,55 @@ body {
 
 @media (max-width: 767.98px) {
   .car-card {
-      margin-bottom: 1rem;
+    margin-bottom: 1rem;
   }
-  .cart-btn{
+
+  .cart-btn {
     display: none;
   }
 
-  #desktopBanner{
+  #desktopBanner {
     display: none;
   }
 
-  #mobileBanner{
+  #mobileBanner {
     display: block;
   }
 
-  #mobileNavbar{
-    display: block!important;
+  #mobileNavbar {
+    display: block !important;
   }
 
-  #desktopNavbar{
+  #desktopNavbar {
     display: none;
   }
 
-  .car-image{
-    height: 217px!important;
+  .car-image {
+    height: 217px !important;
   }
 
-  .product-image{
-    height: 219px!important;
+  .product-image {
+    height: 219px !important;
   }
 
   .footer-content {
-      flex-direction: column;
+    flex-direction: column;
   }
 }
 
 /* <!-- Fade-in Animation --> */
 @keyframes popFadeIn {
   from {
-      opacity: 0;
-      transform: scale(0.95);
+    opacity: 0;
+    transform: scale(0.95);
   }
+
   to {
-      opacity: 0.95;
-      transform: scale(1);
+    opacity: 0.95;
+    transform: scale(1);
   }
 }
+
 /* --- Underline Grow Animation --- */
 
 /* Style for the navbar links */
@@ -310,7 +325,8 @@ body {
   transform: translateX(-50%);
   width: 0;
   height: 3px;
-  background: linear-gradient(90deg, #ff7d7d, rgb(255, 0, 0), #ff9393); /* Neon gradient */
+  background: linear-gradient(90deg, #ff7d7d, rgb(255, 0, 0), #ff9393);
+  /* Neon gradient */
   box-shadow: 0 0 8px rgb(255, 6, 6);
   border-radius: 2px;
   transition: width 0.4s ease;
@@ -342,28 +358,31 @@ body {
 
 .accordion-button {
   color: white !important;
-  background-color: #212529 !important;
+  background-color: #121111 !important;
 }
 
 .accordion-button::after {
-  filter: invert(1); /* Makes the caret icon white */
+  filter: invert(1);
+  /* Makes the caret icon white */
 }
 
+
 .accordion-button:not(.collapsed) {
-  background-color: #343a40 !important;
-  color: #fff !important;
+  background-color: #121111 !important;
+  color: #ffffff !important;
   box-shadow: none;
 }
 
 
 @keyframes popFadeIn {
   0% {
-      transform: scale(0.8);
-      opacity: 0;
+    transform: scale(0.8);
+    opacity: 0;
   }
+
   100% {
-      transform: scale(1);
-      opacity: 0.95;
+    transform: scale(1);
+    opacity: 0.95;
   }
 }
 
@@ -383,23 +402,4 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: darkred;
-}
-
-.curly-line {
-  position: fixed;
-  top: 0;
-  width: 20px;
-  height: 100%;
-  background-image: url("data:image/svg+xml,%3Csvg width='20' height='100' viewBox='0 0 20 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10,0 C0,20 20,40 10,60 C0,80 20,100 10,120' stroke='red' fill='none' stroke-width='2'/%3E%3C/svg%3E");
-  background-repeat: repeat-y;
-  z-index: 10000;
-  pointer-events: none;
-}
-
-.left-curly {
-  left: 0;
-}
-
-.right-curly {
-  right: 0;
 }
