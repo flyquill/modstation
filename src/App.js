@@ -19,36 +19,39 @@ import CustomMods from './pages/CustomMods';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 import CarModelRequestsTable from './components/CarModelRequestsTable';
+import { HelmetProvider } from 'react-helmet-async';
 
 function App() {
   return (
-    <Router>
-      {/* We'll apply the background to a wrapper div */}
-      <div className="app-background"> {/* Add this div */}
-        <Navbar />
-        {/* <RandomAlert /> */}
-        {/* Decorative curly lines */}
-        {/* <div className="curly-line left-curly" />
+    <HelmetProvider>
+      <Router>
+        {/* We'll apply the background to a wrapper div */}
+        <div className="app-background"> {/* Add this div */}
+          <Navbar />
+          {/* <RandomAlert /> */}
+          {/* Decorative curly lines */}
+          {/* <div className="curly-line left-curly" />
         <div className="curly-line right-curly" /> */}
-        <GlobalAlert />
-        <Routes>
-          <Route path="/package" element={<Package />} />
-          <Route path="/custom_requests" element={<CarModelRequestsTable />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/terms" element={<Terms />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/category" element={<Categories />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/custom" element={<CustomMods />} />
-          <Route path="/packageManagement" element={<UploadPackageForm />} />
-          <Route path="/" element={<Home />} />
-        </Routes>
-        <Footer />
-      </div> {/* Close the div */}
-    </Router>
+          <GlobalAlert />
+          <Routes>
+            <Route path="/package" element={<Package />} />
+            <Route path="/custom_requests" element={<CarModelRequestsTable />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/category" element={<Categories />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/custom" element={<CustomMods />} />
+            <Route path="/packageManagement" element={<UploadPackageForm />} />
+            <Route path="/" element={<Home />} />
+          </Routes>
+          <Footer />
+        </div> {/* Close the div */}
+      </Router>
+    </HelmetProvider>
   );
 }
 

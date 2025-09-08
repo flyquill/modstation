@@ -12,8 +12,9 @@ const CarModelRequestsTable = () => {
   const [name, setName] = useState("");
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
-
+  
   useEffect(() => {
+
     fetch(`${databaseApiUrl}get_requests.php`)
       .then((res) => res.json())
       .then((data) => {

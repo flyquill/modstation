@@ -45,9 +45,13 @@ export default function Navbar() {
             <i className="bi bi-discord"> </i>
             Discord
           </a> */}
-          <a className="btn btn-outline-light" href="https://patreon.com/u81768126" target='_blank'>
+          <a className="btn btn-outline-light" href="https://www.patreon.com/c/gtamodstation" target='_blank'>
             <i className="bi bi-"> </i>
             Patreon
+          </a>
+          <a className="btn btn-outline-light" href="https://www.youtube.com/@GTAModStation" target='_blank'>
+            <i className="bi bi-youtube"> </i>
+            Youtube
           </a>
         </div>
 
@@ -55,7 +59,6 @@ export default function Navbar() {
         <img src={mainImage} className="full-width-image mb-0" id="desktopBanner" alt="Full Width" style={{ marginLeft: '-1px' }} />
         <img src={mainImage} className="full-width-image mb-0" id="mobileBanner" alt="Full Width" style={{ marginLeft: '-1px', display: 'none' }} />
       </div>
-
 
       <nav className="navbar navbar-dark navbar-expand-lg" id='desktopNavbar' style={{
         backgroundColor: '#0B0909',

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import TurnstileWidget from "../utils/TurnstileWidget";
 
 const CarModelRequest = () => {
   const databaseApiUrl = process.env.REACT_APP_DATABASE_API_URL;
@@ -13,6 +14,8 @@ const CarModelRequest = () => {
     additional_details: "",
     reference_files: [],
   });
+
+  const [turnstileToken, setTurnstileToken] = useState(""); // ✅ store token
 
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
@@ -87,6 +90,12 @@ const CarModelRequest = () => {
     if (isSubmitted) return;
     setIsSubmitted(true);
 
+    if (!turnstileToken) {
+      alert("⚠️ Please verify you are human before submitting.");
+      setIsSubmitted(false);
+      return;
+    }
+
     if (formData.reference_files.length > MAX_FILES) {
       alert(`You can only upload up to ${MAX_FILES} files.`);
       setIsSubmitted(false);
@@ -111,6 +120,9 @@ const CarModelRequest = () => {
         formPayload.append(key, value);
       }
     });
+
+    // ✅ Append Turnstile token
+    formPayload.append("cf-turnstile-response", turnstileToken);
 
     try {
       setIsUploading(true);
@@ -391,6 +403,12 @@ const CarModelRequest = () => {
                     </div>
                   </div>
                 )}
+
+                {/* <!-- Cloudflare Turnstile widget --> */}
+                {/* <div className="cf-turnstile" data-sitekey="0x4AAAAAABz8ULW5QA-6U0Bw"></div> */}
+
+                {/* ✅ Cloudflare Turnstile */}
+                <TurnstileWidget onVerify={setTurnstileToken} />
 
                 {/* Submit */}
                 <div className="d-grid">

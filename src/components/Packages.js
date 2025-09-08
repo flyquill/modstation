@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import LoadingPlaceholders from './LoadingPlaceholders';
 import { addToCartPackage, getCookie } from '../utils/cartUtils';
+import '../utils/css/packages.css';
 
 export default function Packages(props) {
     const alertTimeoutRef = useRef(null);
