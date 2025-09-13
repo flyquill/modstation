@@ -21,6 +21,8 @@ export default function Package() {
   const [cartItemIds, setCartItemIds] = useState([]);
   const [attachedAddonPackages, setAttachedAddonPackages] = useState([]);
   const [isImageFullScreen, setIsImageFullScreen] = useState(false);
+  const [isVideoFullScreen, setIsVideoFullScreen] = useState(false);
+  const [videoId, setVideoId] = useState('');
 
   const navigate = useNavigate();
 
@@ -44,6 +46,13 @@ export default function Package() {
             setCustomData(customApiData);
             if (customApiData.package_images[0]) {
               setcurrentImage(`${databaseApiUrl}uploads/${customApiData.package_images[0]}`);
+            }
+
+
+            const match = customApiData?.video_url.match(/embed\/([^?]+)/);
+            console.log(customApiData);
+            if (match && match[1]) {
+              setVideoId(match[1]);
             }
           } else {
             setCustomData(null);
@@ -256,6 +265,14 @@ export default function Package() {
             </div>
           )}
 
+          {/* Fullscreen Modal */}
+          {isVideoFullScreen && (
+            <div className="fullscreen-overlay" onClick={() => setIsVideoFullScreen(false)}>
+              <span className="close-btn">&times;</span>
+              <iframe className="fullscreen-image" style={{ width: '80%', height: '100%' }} src={customData.video_url} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+            </div>
+          )}
+
           <div className="container mt-5">
             <div className="row">
               <div className="col-md-6">
@@ -283,6 +300,47 @@ export default function Package() {
                     <button className="thumbnail-item" style={{ padding: '0', border: '0' }}>
                       <img src={currentImage} alt="" className="thumbnail-image" />
                     </button>}
+
+                  {customData && customData.video_url ? (
+                    <button
+                      className="thumbnail-item"
+                      style={{ padding: '0', border: '0', position: 'relative' }}
+                      onClick={() => setIsVideoFullScreen(true)}
+                    >
+                      {/* Image */}
+                      <img
+                        src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+                        alt=""
+                        className="thumbnail-image"
+                      />
+
+                      {/* YouTube Icon Overlay */}
+                      <span
+                        style={{
+                          position: 'absolute',
+                          top: '50%',
+                          left: '50%',
+                          transform: 'translate(-50%, -50%)',
+                          backgroundColor: 'white',
+                          height: '15px',
+                          width: '15px'
+                        }}>
+
+                      </span>
+                      <i
+                        className="bi bi-youtube"
+                        style={{
+                          position: 'absolute',
+                          top: '50%',
+                          left: '50%',
+                          transform: 'translate(-50%, -50%)',
+                          fontSize: '3rem',
+                          color: 'red',
+                        }}
+                      />
+                    </button>
+                  ) : ''}
+
                 </div>
               </div>
               <div className="col-md-6">

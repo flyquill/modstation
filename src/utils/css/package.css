@@ -212,9 +212,9 @@
 }
 
 .thumbnail-item {
-    width: 80px;
+    width: auto;
     /* Adjust as needed */
-    height: 80px;
+    height: 85px;
     /* Ensure thumbnails are square */
     object-fit: cover;
     border-radius: 0.25rem;

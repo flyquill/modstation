@@ -14,7 +14,8 @@ export default function Navbar() {
 
   const categories = [
     { id: 2909711, name: 'Free' },
-    { id: 2937606, name: 'Paid' }
+    { id: 2937606, name: 'Paid' },
+    { id: 2937607, name: 'Subscriptions' }
   ];
 
   const isActive = (id) => location.search === `?=${id}`;
@@ -80,10 +81,11 @@ export default function Navbar() {
             <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="navbar-nav">
                 <li className="nav-item">
-                  <Link className={`nav-link ${location.pathname === '/' ? 'active' : ''}`} to="/">Home</Link>
+                  <Link className={`nav-link ${location.pathname === '/' ? 'active' : ''}`} to="/">Vehicles</Link>
                 </li>
 
-                {categories.map(category => (
+                {/* Showing categories here */}
+                {/* {categories.map(category => (
                   <li className="nav-item" key={category.id}>
                     <Link
                       className={`nav-link ${isActive(category.id) ? 'active' : ''}`}
@@ -92,11 +94,11 @@ export default function Navbar() {
                       {category.name}
                     </Link>
                   </li>
-                ))}
+                ))} */}
 
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <Link className="nav-link" to="/category?=fivem">FiveM</Link>
-                </li>
+                </li> */}
                 <li className="nav-item">
                   <Link className="nav-link" to="/custom">Develop Own Model</Link>
                 </li>

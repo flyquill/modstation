@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import axios from "axios";
+import TurnstileWidget from "../utils/TurnstileWidget";
 
 const ContactUs = () => {
     const databaseApiUrl = process.env.REACT_APP_DATABASE_API_URL;
+
     const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
     });
+
+    const [turnstileToken, setTurnstileToken] = useState(""); // ✅ store token
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -15,43 +21,60 @@ const ContactUs = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (isSubmitting) return;
+        setIsSubmitting(true);
+
+        if (!turnstileToken) {
+            alert("⚠️ Please verify you are human before submitting.");
+            setIsSubmitting(false);
+            return;
+        }
+
+        const formPayload = new FormData();
+        Object.entries(formData).forEach(([key, value]) => {
+            formPayload.append(key, value);
+        });
+
+        // ✅ Append Turnstile token
+        formPayload.append("cf-turnstile-response", turnstileToken);
 
         try {
-            const response = await fetch(`${databaseApiUrl}contact_us.php`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formData),
-            });
+            const response = await axios.post(
+                `${databaseApiUrl}contact_us.php`,
+                formPayload,
+                { headers: { "Content-Type": "multipart/form-data" } }
+            );
 
-            const data = await response.json();
+            const data = response.data;
             console.log("Server response:", data);
 
             if (data.status_id === "1") {
-                alert("Message sent successfully!");
-                setFormData({ name: '', email: '', subject: '', message: '' });
+                alert("✅ Success! Your message has been sent. We appreciate you reaching out and will respond as soon as we can.");
+                setFormData({ name: "", email: "", subject: "", message: "" });
+                setTurnstileToken("");
+                window.location.href = "/";
             } else {
-                alert("Failed to send message: " + data.error);
+                alert("❌ Failed: " + data.error);
             }
         } catch (error) {
             console.error("Error:", error);
             alert("Something went wrong.");
+        } finally {
+            setIsSubmitting(false);
         }
     };
-
-    window.scrollTo({ top: 0, behavior: 'smooth' });
 
     return (
         <div className="container my-5">
             <div className="row justify-content-center">
                 <div className="col-md-8 col-lg-6">
-                    <div className="card shadow">
+                    <p className="text-light text-center">You can contact us directly on <a className="text-decoration-none" href="mailto:support@gtamodstation.com">support@gtamodstation.com</a></p>
+                    <div className="card shadow" style={{ backgroundColor: "#131111" }}>
                         <div className="card-body p-4">
                             <h2 className="text-center text-danger mb-4">Contact Us</h2>
                             <form onSubmit={handleSubmit}>
                                 <div className="mb-3">
-                                    <label htmlFor="name" className="form-label">Name</label>
+                                    <label className="form-label text-light">Name</label>
                                     <input
                                         type="text"
                                         name="name"
@@ -59,12 +82,11 @@ const ContactUs = () => {
                                         value={formData.name}
                                         onChange={handleChange}
                                         className="form-control"
-                                        id="name"
                                     />
                                 </div>
 
                                 <div className="mb-3">
-                                    <label htmlFor="email" className="form-label">Email</label>
+                                    <label className="form-label text-light">Email</label>
                                     <input
                                         type="email"
                                         name="email"
@@ -72,12 +94,11 @@ const ContactUs = () => {
                                         value={formData.email}
                                         onChange={handleChange}
                                         className="form-control"
-                                        id="email"
                                     />
                                 </div>
 
                                 <div className="mb-3">
-                                    <label htmlFor="subject" className="form-label">Subject</label>
+                                    <label className="form-label text-light">Subject</label>
                                     <input
                                         type="text"
                                         name="subject"
@@ -85,12 +106,11 @@ const ContactUs = () => {
                                         value={formData.subject}
                                         onChange={handleChange}
                                         className="form-control"
-                                        id="subject"
                                     />
                                 </div>
 
                                 <div className="mb-3">
-                                    <label htmlFor="message" className="form-label">Message</label>
+                                    <label className="form-label text-light">Message</label>
                                     <textarea
                                         name="message"
                                         rows="5"
@@ -98,13 +118,19 @@ const ContactUs = () => {
                                         value={formData.message}
                                         onChange={handleChange}
                                         className="form-control"
-                                        id="message"
                                     ></textarea>
                                 </div>
 
+                                {/* ✅ Cloudflare Turnstile */}
+                                <TurnstileWidget onVerify={setTurnstileToken} />
+
                                 <div className="d-grid">
-                                    <button type="submit" className="btn btn-danger">
-                                        Send Message
+                                    <button
+                                        type="submit"
+                                        className="btn btn-danger"
+                                        disabled={isSubmitting}
+                                    >
+                                        {isSubmitting ? "Sending..." : "Send Message"}
                                     </button>
                                 </div>
                             </form>

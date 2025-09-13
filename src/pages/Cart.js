@@ -29,7 +29,8 @@ export default function Cart() {
     }
 
     const procedToCheckout = () => {
-        window.open(checkoutLink, '_blank')
+        // window.open(checkoutLink, '_blank')
+        window.location.href = checkoutLink;
     }
 
     const handleRemove = (pkgId) => {
@@ -108,7 +109,7 @@ export default function Cart() {
         <>
             <div>
                 <div className="container py-5">
-                    <h2 className="mb-4" style={{ color: '#0ff' }}>Your Cart</h2>
+                    <h2 className="mb-4 text-danger">Your Cart</h2>
                     {loading ? (
                         <>
                             {Array.from({ length: 2 }).map((_, index) => (

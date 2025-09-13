@@ -20,6 +20,7 @@ import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 import CarModelRequestsTable from './components/CarModelRequestsTable';
 import { HelmetProvider } from 'react-helmet-async';
+import ThankYou from './pages/ThankYou';
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/custom" element={<CustomMods />} />
             <Route path="/packageManagement" element={<UploadPackageForm />} />
+            <Route path="/thank-you" element={<ThankYou />} />
             <Route path="/" element={<Home />} />
           </Routes>
           <Footer />

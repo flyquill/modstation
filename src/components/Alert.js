@@ -39,9 +39,9 @@ export default function Alert(props) {
             <div style={mainDivStyle}>
                 <img src={props.image} id="packageImage" alt="Item Image" style={imgStyle} />
                 <div style={{ flexGrow: 1 }}>
-                    <strong id="packageName" style={{ fontSize: '1em', color: 'red' }}>{props.name}</strong>
+                    <strong id="packageName" style={{ fontSize: '0.8em', color: 'red' }}>{props.name}</strong>
                     <br />
-                    <span style={{ fontSize: '0.9em', color: 'red'}}> Price: $ <span id="packagePrice" style={{ color: 'red' }}>{props.price}</span></span>
+                    <span style={{ fontSize: '0.7em', color: 'white'}}> Price: $ <span id="packagePrice" style={{ color: 'white' }}>{props.price}</span></span>
                 </div>
             </div> : ''
         }

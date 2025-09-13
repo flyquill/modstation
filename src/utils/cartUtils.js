@@ -44,8 +44,8 @@ export function getCookie(name) {
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            complete_url: "http://localhost:3000/",
-            cancel_url: "http://localhost:3000/",
+            complete_url: "https://www.gtamodstation.com/thank-you",
+            cancel_url: "https://www.gtamodstation.com",
             custom: {
               foo: "bar"
             },
@@ -62,7 +62,7 @@ export function getCookie(name) {
           basketIdent = data.data.ident;
           setCookie(cookieName, basketIdent);
   
-          const authResponse = await fetch(`https://headless.tebex.io/api/accounts/${token}/baskets/${basketIdent}/auth?returnUrl=http://localhost:3000`);
+          const authResponse = await fetch(`https://headless.tebex.io/api/accounts/${token}/baskets/${basketIdent}/auth?returnUrl=https://www.gtamodstation.com`);
           const authData = await authResponse.json();
 
           if (Array.isArray(authData) && authData[0]?.url) {

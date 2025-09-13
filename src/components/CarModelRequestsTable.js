@@ -5,6 +5,9 @@ const CarModelRequestsTable = () => {
   const [requests, setRequests] = useState([]);
   const [filtered, setFiltered] = useState([]);
 
+  // store file sizes per request
+  const [fileInfo, setFileInfo] = useState({});
+
   // Filters
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("");
@@ -12,7 +15,7 @@ const CarModelRequestsTable = () => {
   const [name, setName] = useState("");
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
-  
+
   useEffect(() => {
 
     fetch(`${databaseApiUrl}get_requests.php`)
@@ -127,6 +130,33 @@ const CarModelRequestsTable = () => {
     }
   };
 
+  // helper: format size in KB/MB
+  const formatSize = (bytes) => {
+    if (bytes < 1024) return `${bytes} B`;
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+  };
+
+  // fetch file sizes via HEAD request
+  const fetchFileSizes = async (id, files) => {
+    let totalSize = 0;
+
+    for (let file of files) {
+      try {
+        const res = await fetch(`${databaseApiUrl}${file}`, { method: "HEAD" });
+        const size = res.headers.get("Content-Length");
+        if (size) totalSize += parseInt(size, 10);
+      } catch (err) {
+        console.error("Failed to fetch file size", err);
+      }
+    }
+
+    setFileInfo((prev) => ({
+      ...prev,
+      [id]: { count: files.length, size: totalSize },
+    }));
+  };
+
   // Download all files
   const handleDownloadAll = (files) => {
     try {
@@ -138,6 +168,7 @@ const CarModelRequestsTable = () => {
       console.error("Invalid file JSON", err);
     }
   };
+
 
   return (
     <div className="container my-5">
@@ -176,6 +207,8 @@ const CarModelRequestsTable = () => {
                     console.error("Invalid JSON for files", err);
                   }
                 }
+                
+                const info = fileInfo[req.id];
 
                 return (
                   <tr key={req.id}>
@@ -188,16 +221,27 @@ const CarModelRequestsTable = () => {
                     <td>{req.additional_details}</td>
                     <td>
                       {fileLinks.length > 0 ? (
-                        <button
-                          className="btn btn-sm btn-success mb-1"
-                          onClick={() => handleDownloadAll(req.reference_files)}
-                        >
-                          View
-                        </button>
+                        <>
+                          <button
+                            className="btn btn-sm btn-success mb-1"
+                            onClick={() => handleDownloadAll(req.reference_files)}
+                          >
+                            View
+                          </button>
+                          <br />
+                          {info ? (
+                            <small>
+                              {info.count} files ({formatSize(info.size)})
+                            </small>
+                          ) : (
+                            <small>Loading...</small>
+                          )}
+                        </>
                       ) : (
                         "N/A"
                       )}
                     </td>
+
                     <td>
                       <select
                         className="form-select"

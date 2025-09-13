@@ -404,9 +404,6 @@ const CarModelRequest = () => {
                   </div>
                 )}
 
-                {/* <!-- Cloudflare Turnstile widget --> */}
-                {/* <div className="cf-turnstile" data-sitekey="0x4AAAAAABz8ULW5QA-6U0Bw"></div> */}
-
                 {/* ✅ Cloudflare Turnstile */}
                 <TurnstileWidget onVerify={setTurnstileToken} />
 
@@ -428,20 +425,20 @@ const CarModelRequest = () => {
       </div>
 
       ) : (<div
-        className="text-center text-light my-5 bg-transparent"
+        className="text-center text-light bg-transparent"
         style={{
           padding: "30px",
           borderRadius: "12px",
         }}
       >
-        <h4 style={{ color: "#ff3333" }}>Request Already Submitted</h4>
+        <h3 className="mb-5" style={{ color: "#ff3333" }}>Request Already Submitted</h3>
         <p>
           You have already submitted a request. Please check your email or wait{" "}
           <strong>24 hours</strong> before submitting another request.
         </p>
         <p>
           For urgent inquiries, contact us via live chat support or email at{" "}
-          <strong>contact@gtamodstation.com</strong>.
+          <strong><a className="text-decoration-none" href="mailto:support@gtamodstation.com">support@gtamodstation.com</a></strong>.
         </p>
       </div>
       )}
