@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 export default function UploadPackageForm() {
     const [title, setTitle] = useState('');
     const [videoUrl, setVideoUrl] = useState('');
+    const [googleDriveLink, setGoogleDriveLink] = useState('');
     const [originalTitle, setOriginalTitle] = useState('');
     const [images, setImages] = useState([]);        // New images to upload
     const [existingImages, setExistingImages] = useState([]); // Existing images from database
@@ -16,6 +17,7 @@ export default function UploadPackageForm() {
     const databaseApiUrl = process.env.REACT_APP_DATABASE_API_URL;
 
     const packageId = queryParams.get('id');
+    const is_private = queryParams.get('is_private') ? 'YES' : 'NO';
 
     useEffect(() => {
         if (!packageId) return;
@@ -26,12 +28,13 @@ export default function UploadPackageForm() {
                 // const res = await fetch(`https://headless.tebex.io/api/accounts/${token}/packages/${id}`);
                 // const data = await res.json();
 
-                const response = await fetch(`${databaseApiUrl}get_packages.php?package_id=${packageId}&api_key=${databaseApiKey}`);
+                const response = await fetch(`${databaseApiUrl}get_packages.php?package_id=${packageId}&is_private=${is_private}&api_key=${databaseApiKey}`);
                 const data = await response.json();
 
                 if (!data.error) {
                     setTitle(data.package_title || '');
                     setVideoUrl(data.video_url || '');
+                    setGoogleDriveLink(data.google_drive_link || '');
                     setOriginalTitle(title);
                     setExistingImages(data.package_images || []);
                 }
@@ -99,6 +102,8 @@ export default function UploadPackageForm() {
         formData.append('package_title', title);
         formData.append('package_id', packageId);
         formData.append('video_url', videoUrl);
+        formData.append('is_private', is_private);
+        formData.append('google_drive_link', googleDriveLink);
         formData.append('api_key', databaseApiKey);
 
         for (let i = 0; i < images.length; i++) {
@@ -205,6 +210,11 @@ export default function UploadPackageForm() {
                 <div className="mb-3">
                     <label className="form-label">Video Url:</label>
                     <input type="text" className="form-control" value={videoUrl} onChange={(e) => setVideoUrl(e.target.value)}/>
+                </div>
+
+                <div className="mb-3">
+                    <label className="form-label">Google Drive Link (Only for Free Packages):</label>
+                    <input type="text" className="form-control" value={googleDriveLink} onChange={(e) => setGoogleDriveLink(e.target.value)}/>
                 </div>
 
                 <div className="text-center">

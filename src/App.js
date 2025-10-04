@@ -21,6 +21,8 @@ import Terms from './pages/Terms';
 import CarModelRequestsTable from './components/CarModelRequestsTable';
 import { HelmetProvider } from 'react-helmet-async';
 import ThankYou from './pages/ThankYou';
+import PrivateProduct from './components/PrivateProduct';
+import FreeCategoryForUser from './components/FreeCategoryForUser';
 
 function App() {
   return (
@@ -36,6 +38,8 @@ function App() {
           <GlobalAlert />
           <Routes>
             <Route path="/package" element={<Package />} />
+            <Route path="/free" element={<PrivateProduct />} />
+            <Route path="/free_packages" element={<FreeCategoryForUser />} />
             <Route path="/custom_requests" element={<CarModelRequestsTable />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />

@@ -54,6 +54,10 @@ export default function Navbar() {
             <i className="bi bi-youtube"> </i>
             Youtube
           </a>
+          <a className="btn btn-outline-light" href="https://discord.gg/bWCT4nTAJT" target='_blank'>
+            <i className="bi bi-discord"> </i>
+            Discord
+          </a>
         </div>
 
         {/* Main Image */}
@@ -99,6 +103,9 @@ export default function Navbar() {
                 {/* <li className="nav-item">
                   <Link className="nav-link" to="/category?=fivem">FiveM</Link>
                 </li> */}
+                <li className="nav-item">
+                  <Link className="nav-link" to="/free_packages">Free</Link>
+                </li>
                 <li className="nav-item">
                   <Link className="nav-link" to="/custom">Develop Own Model</Link>
                 </li>

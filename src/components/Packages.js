@@ -33,7 +33,7 @@ export default function Packages(props) {
 
     const fetchCustomData = async (pkgId) => {
         try {
-            const response = await fetch(`${databaseApiUrl}get_packages.php?package_id=${pkgId}&api_key=${databaseApiKey}`);
+            const response = await fetch(`${databaseApiUrl}get_packages.php?package_id=${pkgId}&api_key=${databaseApiKey}&is_private=NO`);
             const data = await response.json();
             if (!data.error) {
                 return data;

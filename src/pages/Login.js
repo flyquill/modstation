@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Categories from "../components/Categories";
+import FreeCategory from '../components/FreeCategory';
 import { useNavigate } from "react-router-dom";
 import TurnstileWidget from "../utils/TurnstileWidget";
 
@@ -97,6 +98,7 @@ export default function Login() {
           </button>
         </div>
         <Categories />
+        <FreeCategory/>
       </>
     );
   }
