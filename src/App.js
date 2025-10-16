@@ -28,8 +28,8 @@ function App() {
   return (
     <HelmetProvider>
       <Router>
-        {/* We'll apply the background to a wrapper div */}
-        <div className="app-background"> {/* Add this div */}
+        {/* Main app wrapper */}
+        <div className="app-wrapper">
           <Navbar />
           {/* <RandomAlert /> */}
           {/* Decorative curly lines */}
@@ -55,7 +55,7 @@ function App() {
             <Route path="/" element={<Home />} />
           </Routes>
           <Footer />
-        </div> {/* Close the div */}
+        </div>
       </Router>
     </HelmetProvider>
   );

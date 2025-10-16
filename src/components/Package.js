@@ -200,14 +200,15 @@ export default function Package() {
       </Helmet>
 
       {loading ?
-        <div className="container mt-5">
-          <div className="row">
+        <div className="container mt-5 product-hero">
+          <div className="row" style={{gap: '0px'}}>
             <div className="col-md-6">
               <div className="product-image-container">
                 <svg className="bd-placeholder-img card-img-top product-image" width="100%" height="400px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice">
                   <title>Placeholder</title>
                   <rect width="100%" height="100%" fill="#404142" />
                 </svg>
+                <div className="media-vignette"></div>
               </div>
               <div className="thumbnail-list">
                 <div className="thumbnail-item">
@@ -273,8 +274,8 @@ export default function Package() {
             </div>
           )}
 
-          <div className="container mt-5">
-            <div className="row">
+          <div className="container mt-5 product-hero">
+            <div className="row" style={{gap: '0px'}}>
               <div className="col-md-6">
                 <div className="product-image-container">
                   <img
@@ -284,6 +285,7 @@ export default function Package() {
                     style={{ height: 'auto', maxHeight: '400px' }}
                     onClick={() => setIsImageFullScreen(true)}
                   />
+                  <div className="media-vignette"></div>
                 </div>
                 <div className="thumbnail-list">
                   {/* <div className="thumbnail-item active">
@@ -346,6 +348,7 @@ export default function Package() {
               <div className="col-md-6">
                 <div className="product-details">
                   <h1 className="product-name">{customData && customData.package_title ? customData.package_title : mainPackage.name}</h1>
+                  <p className="product-subtitle">High-fidelity model • Optimized</p>
                   <p className="product-price">Price: ${mainPackage.base_price}</p>
                   {cartItemIds.includes(mainPackage.id) ? (
                     <button className="btn btn-primary mb-2 btn-add-to-cart" onClick={() => navigate('/cart')}>

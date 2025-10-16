@@ -5,7 +5,7 @@ export default function LoadingPlaceholders() {
 
   return (
     <>
-    <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" aria-hidden="true">
+    <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3" aria-hidden="true" style={{gap: '0px'}}>
       {placeholders.map((_, index) => (
         <div className="col" key={index}>
           <div className="car-card">

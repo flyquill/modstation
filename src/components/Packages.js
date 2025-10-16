@@ -124,7 +124,7 @@ export default function Packages(props) {
             {loading ? (
                 <LoadingPlaceholders />
             ) : (
-                <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3" style={{gap: '0px'}}>
                     {packages.map(pkg => {
                         const custom = customData[pkg.id];
 
@@ -137,31 +137,44 @@ export default function Packages(props) {
 
                         const urlId = custom && custom.package_url_id ? custom.package_url_id : pkg.id;
                         const urlCategoryId = custom && custom.package_url_category_id ? custom.package_url_category_id : (pkg.category?.id || '');
+                        
+                        // Category label for card
+                        const categoryLabel = custom && custom.package_category ? custom.package_category : (pkg.category?.name || 'Vehicle Mod');
 
                         return (
-                            <div className="col" key={pkg.id}>
-                                <div className="car-card" style={{ backgroundColor: '#0B0909' }}>
+                            <div className="col mb-4" key={pkg.id}>
+                                <div className="car-card">
                                     <Link to={`/package?id=${urlId}&categoryId=${urlCategoryId}`} style={{ color: 'white', textDecoration: 'none' }}>
                                         <div className="car-image-container">
                                             <img
                                                 src={`${imageUrl}`}
                                                 className="car-image"
                                                 alt={title}
-                                                style={{ height: '259px', width: '100%', objectFit: 'cover' }}
                                             />
+                                            <span className="category-badge">{categoryLabel}</span>
+                                            <div className="image-gradient-top"></div>
                                         </div>
                                     </Link>
                                     <div className="car-details">
                                         <h5 className="card-title">{title}</h5>
-                                        <p className="car-description" style={{ color: 'white', fontWeight: 'bold' }}>
-                                            Price: ${pkg.total_price}
-                                        </p>
-                                        <button
-                                            className="btn btn-danger btn-sm btn-add-to-cart"
-                                            onClick={() => handleAddToCart(pkg.id, title, `${imageUrl}`, pkg.total_price)}
-                                        >
-                                            {cartItemIds.includes(pkg.id) ? 'View in Cart 🛒' : 'Add to Cart'}
-                                        </button>
+                                        <div className="card-meta">High-fidelity model • Optimized</div>
+                                        <div className="card-actions mt-2">
+                                            <p className="price-text">${pkg.total_price}</p>
+                                            <div style={{ display: 'flex' }}>
+                                                <Link
+                                                    to={`/package?id=${urlId}&categoryId=${urlCategoryId}`}
+                                                    className="btn-card-view mx-1"
+                                                >
+                                                    View Details
+                                                </Link>
+                                                <button
+                                                    className="btn-card-buy mx-1"
+                                                    onClick={() => handleAddToCart(pkg.id, title, `${imageUrl}`, pkg.total_price)}
+                                                >
+                                                    {cartItemIds.includes(pkg.id) ? 'View in Cart' : 'Add to Cart'}
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

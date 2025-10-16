@@ -5,17 +5,19 @@ export default function Footer() {
     return (
         <>
 
-            <section className="faq-section" id='faq' style={{ backgroundColor: '#0B0909', color: '#fff', padding: '60px 0' }}>
+            <section className="faq-section" id='faq'>
                 <div className="container">
-                    <h2 className="text-center mb-4">
-                        <span className="line" style={{ color: 'red' }}><strong>──</strong></span>{' '}
-                        Frequently Asked Questions{' '}
-                        <span className="line" style={{ color: 'red' }}><strong>──</strong></span>
-                    </h2>
+                    <div className="section-head">
+                        <div>
+                            <p className="eyebrow">Support</p>
+                            <h2 className="faq-title">Frequently Asked Questions</h2>
+                            <p>Everything you need to know about purchasing, installing, and requesting custom builds.</p>
+                        </div>
+                    </div>
 
                     <div className="accordion accordion-flush" id="accordionFlushExample">
                         {/* FAQ Item 1 */}
-                        <div className="accordion-item" style={{ backgroundColor: '#0B0909', color: '#fff', border: '1px solid #333', borderRadius: '10px', marginBottom: '15px' }}>
+                        <div className="accordion-item" style={{ backgroundColor: 'transparent', color: 'var(--fg)', border: '1px solid rgba(255,255,255,.08)', borderRadius: 'var(--radius)', marginBottom: 'var(--space-2)' }}>
                             <h2 className="accordion-header">
                                 <button
                                     className="accordion-button collapsed"
@@ -24,7 +26,7 @@ export default function Footer() {
                                     data-bs-target="#flush-collapseOne"
                                     aria-expanded="false"
                                     aria-controls="flush-collapseOne"
-                                    style={{ backgroundColor: '#0B0909', color: '#fff', borderRadius: '10px' }}
+                                    style={{ backgroundColor: 'transparent', color: 'var(--fg)', borderRadius: 'var(--radius)' }}
                                 >
                                     Are your mods lore-friendly?
                                 </button>
@@ -37,7 +39,7 @@ export default function Footer() {
                         </div>
 
                         {/* FAQ Item 2 */}
-                        <div className="accordion-item" style={{ backgroundColor: '#0B0909', color: '#fff', border: '1px solid #333', borderRadius: '10px', marginBottom: '15px' }}>
+                        <div className="accordion-item" style={{ backgroundColor: 'transparent', color: 'var(--fg)', border: '1px solid rgba(255,255,255,.08)', borderRadius: 'var(--radius)', marginBottom: 'var(--space-2)' }}>
                             <h2 className="accordion-header">
                                 <button
                                     className="accordion-button collapsed"
@@ -46,7 +48,7 @@ export default function Footer() {
                                     data-bs-target="#flush-collapseTwo"
                                     aria-expanded="false"
                                     aria-controls="flush-collapseTwo"
-                                    style={{ backgroundColor: '#0B0909', color: '#fff', borderRadius: '10px' }}
+                                    style={{ backgroundColor: 'transparent', color: 'var(--fg)', borderRadius: 'var(--radius)' }}
                                 >
                                     Will your models have a substantial effect on my server?
                                 </button>
@@ -59,7 +61,7 @@ export default function Footer() {
                         </div>
 
                         {/* FAQ Item 3 */}
-                        <div className="accordion-item" style={{ backgroundColor: '#0B0909', color: '#fff', border: '1px solid #333', borderRadius: '10px', marginBottom: '15px' }}>
+                        <div className="accordion-item" style={{ backgroundColor: 'transparent', color: 'var(--fg)', border: '1px solid rgba(255,255,255,.08)', borderRadius: 'var(--radius)', marginBottom: 'var(--space-2)' }}>
                             <h2 className="accordion-header">
                                 <button
                                     className="accordion-button collapsed"
@@ -68,7 +70,7 @@ export default function Footer() {
                                     data-bs-target="#flush-collapseThree"
                                     aria-expanded="false"
                                     aria-controls="flush-collapseThree"
-                                    style={{ backgroundColor: '#0B0909', color: '#fff', borderRadius: '10px' }}
+                                    style={{ backgroundColor: 'transparent', color: 'var(--fg)', borderRadius: 'var(--radius)' }}
                                 >
                                     I would like my own custom model to be made how do I do that?
                                 </button>
@@ -83,7 +85,7 @@ export default function Footer() {
 
 
                         {/* FAQ Item 4 */}
-                        <div className="accordion-item" style={{ backgroundColor: '#0B0909', color: '#fff', border: '1px solid #333', borderRadius: '10px', marginBottom: '15px' }}>
+                        <div className="accordion-item" style={{ backgroundColor: 'transparent', color: 'var(--fg)', border: '1px solid rgba(255,255,255,.08)', borderRadius: 'var(--radius)', marginBottom: 'var(--space-2)' }}>
                             <h2 className="accordion-header">
                                 <button
                                     className="accordion-button collapsed"
@@ -92,7 +94,7 @@ export default function Footer() {
                                     data-bs-target="#flush-collapseFour"
                                     aria-expanded="false"
                                     aria-controls="flush-collapseFour"
-                                    style={{ backgroundColor: '#0B0909', color: '#fff', borderRadius: '10px' }}
+                                    style={{ backgroundColor: 'transparent', color: 'var(--fg)', borderRadius: 'var(--radius)' }}
                                 >
                                     What variety of models do you make?
                                 </button>
@@ -105,7 +107,7 @@ export default function Footer() {
                         </div>
 
                         {/* FAQ Item 5 */}
-                        <div className="accordion-item" style={{ backgroundColor: '#0B0909', color: '#fff', border: '1px solid #333', borderRadius: '10px', marginBottom: '15px' }}>
+                        <div className="accordion-item" style={{ backgroundColor: 'transparent', color: 'var(--fg)', border: '1px solid rgba(255,255,255,.08)', borderRadius: 'var(--radius)', marginBottom: 'var(--space-2)' }}>
                             <h2 className="accordion-header">
                                 <button
                                     className="accordion-button collapsed"
@@ -114,7 +116,7 @@ export default function Footer() {
                                     data-bs-target="#flush-collapseFive"
                                     aria-expanded="false"
                                     aria-controls="flush-collapseFive"
-                                    style={{ backgroundColor: '#0B0909', color: '#fff', borderRadius: '10px' }}
+                                    style={{ backgroundColor: 'transparent', color: 'var(--fg)', borderRadius: 'var(--radius)' }}
                                 >
                                     I need support.
                                 </button>
@@ -131,7 +133,7 @@ export default function Footer() {
 
 
 
-            <footer className="footer py-4" style={{ backgroundColor: '#0B0909', color: '#fff' }}>
+            <footer className="footer py-4">
                 {/* <div className="container d-flex flex-column flex-md-row justify-content-between align-items-center mb-3">
                     <p className="mb-2 mb-md-0">We accept the following payment methods:</p>
                     <div className="payment-icons d-flex align-items-center gap-3">
@@ -153,8 +155,8 @@ export default function Footer() {
 
                 <hr className="border-secondary" />
 
-                <div className="text-center mt-3" style={{ fontSize: '0.9rem', color: '#aaa' }}>
-                    &copy; All rights Reserved 2025 <span style={{ color: 'lime' }}> <a href="http://gtamodstation.com" style={{color: 'lime', textDecoration: 'none'}} >gtamodstation.com</a></span>
+                <div className="text-center mt-3" style={{ fontSize: '0.9rem', color: 'var(--muted)' }}>
+                    &copy; All rights Reserved 2025 <span style={{ color: 'var(--primary)' }}> <a href="http://gtamodstation.com" style={{color: 'var(--primary)', textDecoration: 'none'}} >gtamodstation.com</a></span>
                 </div>
             </footer>
 

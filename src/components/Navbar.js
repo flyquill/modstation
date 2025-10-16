@@ -23,175 +23,140 @@ export default function Navbar() {
 
   return (
     <>
-      <Link
-        className="btn btn-outline-light position-fixed top-0 end-0 m-3 z-1030 cart-btn"
-        id="cartToggleBtn"
-        style={{ zIndex: 999 }}
-        to="/cart"
-      >
-        <i className="bi bi-cart"></i> Cart
-        <span
-          id="cartCount"
-          className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-        ></span>
-        {/* <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-          0
-        </span> */}
-      </Link>
-
-      <div className="position-relative">
-        {/* Social Media Buttons */}
-        <div className="position-absolute bottom-0 start-0 m-3 d-flex gap-2" style={{ zIndex: 10 }}>
-          {/* <a className="btn btn-outline-light" href="https://discord.com/" target='_blank'>
-            <i className="bi bi-discord"> </i>
-            Discord
-          </a> */}
-          <a className="btn btn-outline-light" href="https://www.patreon.com/c/gtamodstation" target='_blank'>
-            <i className="bi bi-"> </i>
-            Patreon
-          </a>
-          <a className="btn btn-outline-light" href="https://www.youtube.com/@GTAModStation" target='_blank'>
-            <i className="bi bi-youtube"> </i>
-            Youtube
-          </a>
-          <a className="btn btn-outline-light" href="https://discord.gg/bWCT4nTAJT" target='_blank'>
-            <i className="bi bi-discord"> </i>
-            Discord
-          </a>
-        </div>
-
-        {/* Main Image */}
-        <img src={mainImage} className="full-width-image mb-0" id="desktopBanner" alt="Full Width" style={{ marginLeft: '-1px' }} />
-        <img src={mainImage} className="full-width-image mb-0" id="mobileBanner" alt="Full Width" style={{ marginLeft: '-1px', display: 'none' }} />
-      </div>
-
+      {/* Top Navigation Bar */}
       <nav className="navbar navbar-dark navbar-expand-lg" id='desktopNavbar' style={{
-        backgroundColor: '#0B0909',
-        border: '2px solid rgb(255, 0, 0)',
-        borderLeft: '0',
-        borderRight: '0',
-        padding: '0',
-        opacity: '0.8',
-        zIndex: '1',
+        backgroundColor: 'transparent',
+        border: 'none',
+        padding: '1rem 0',
+        position: 'sticky',
         top: '0',
-        position: 'sticky'
+        zIndex: '1000',
+        boxShadow: '0 2px 20px rgba(0,0,0,0.0)',
+        backdropFilter: 'blur(6px)'
       }}>
-        <div className="container-fluid">
-          <Link className="navbar-brand" to="/" style={{ padding: '0', margin: '0' }}>
-            <img src={logo} style={{ width: '60px', borderRadius: '60px' }} alt="Logo" />
+        <div className="container-fluid d-flex align-items-center justify-content-between">
+          {/* Brand Logo */}
+          <Link className="navbar-brand d-flex align-items-center" to="/" style={{ padding: '0', margin: '0' }}>
+            <div className="brand-icon" style={{
+              width: '32px',
+              height: '32px',
+              backgroundColor: 'var(--primary)',
+              borderRadius: '6px',
+              marginRight: '12px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
+              <span style={{ color: '#031018', fontWeight: 'bold', fontSize: '14px' }}>GTA</span>
+            </div>
+            <span style={{ 
+              color: 'var(--primary)', 
+              fontWeight: '900', 
+              fontSize: '1.2rem',
+              letterSpacing: '0.05em'
+            }}>
+              GTAModStation
+            </span>
           </Link>
 
-          <div className="navbar-center">
-            <div className="collapse navbar-collapse" id="navbarNav">
-              <ul className="navbar-nav">
-                <li className="nav-item">
-                  <Link className={`nav-link ${location.pathname === '/' ? 'active' : ''}`} to="/">Vehicles</Link>
-                </li>
-
-                {/* Showing categories here */}
-                {/* {categories.map(category => (
-                  <li className="nav-item" key={category.id}>
-                    <Link
-                      className={`nav-link ${isActive(category.id) ? 'active' : ''}`}
-                      to={`/category?id=${category.id}`}
-                    >
-                      {category.name}
-                    </Link>
-                  </li>
-                ))} */}
-
-                {/* <li className="nav-item">
-                  <Link className="nav-link" to="/category?=fivem">FiveM</Link>
-                </li> */}
-                <li className="nav-item">
-                  <Link className="nav-link" to="/free_packages">Free</Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/custom">Develop Own Model</Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/contact">Contact Us</Link>
-                </li>
-                {loggedInUser ?
-                  <li className="nav-item">
-                    <Link className="nav-link" to="/login">Admin</Link>
-                  </li>
-                  : ''}
-              </ul>
-            </div>
+          {/* Navigation Links */}
+          <div className="navbar-nav d-flex flex-row gap-4">
+            <Link className={`nav-link ${location.pathname === '/' ? 'active' : ''}`} to="/">Home</Link>
+            <button
+              className={`nav-link btn-link`}
+              // style={{ background: 'none', border: 'none', padding: 0, color: 'inherit', cursor: 'pointer' }}
+              onClick={() => {
+                if (location.pathname === '/') {
+                  const el = document.getElementById('featured');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                  window.location.href = '/#featured';
+                }
+              }}
+            >
+              Featured
+            </button>
+            <button
+              className="nav-link"
+              onClick={() => {
+                if (window.location.pathname !== "/") {
+                  window.location.href = "/#categories";
+                } else {
+                  const el = document.getElementById("categories");
+                  if (el) {
+                    el.scrollIntoView({ behavior: "smooth" });
+                  }
+                }
+              }}
+            >
+              Categories
+            </button>
+            <Link className="nav-link" to="/about">About</Link>
+            <button
+              className="nav-link"
+              onClick={() => {
+                if (window.location.pathname !== "/") {
+                  window.location.href = "/#faq";
+                } else {
+                  const el = document.getElementById("faq");
+                  if (el) {
+                    el.scrollIntoView({ behavior: "smooth" });
+                  }
+                }
+              }}
+            >
+              FAQ
+            </button>
           </div>
 
-          <div id="search-container">
-            {/* <i className="fas fa-search text-white search-icon" id="search-icon"></i>
-            <input className="form-control" type="text" id="search-box" placeholder="Search..." /> */}
+          {/* Action Buttons */}
+          <div className="d-flex gap-3">
+            <button className="btn btn-primary nav-action" onClick={()=>{window.location.href = '/#custom'}} style={{
+              backgroundColor: 'var(--primary)',
+              color: '#031018',
+              border: 'none',
+              borderRadius: '8px',
+              padding: '8px 16px',
+              fontWeight: '700',
+              fontSize: '0.9rem'
+            }}>
+              Request Build
+            </button>
+            <a className="btn btn-outline-light nav-action" href="https://www.patreon.com/c/gtamodstation/shop" target="_blank" rel="noopener noreferrer" style={{
+              backgroundColor: 'transparent',
+              color: 'var(--silver)',
+              border: '1px solid rgba(255,255,255,0.2)',
+              borderRadius: '8px',
+              padding: '8px 16px',
+              fontWeight: '700',
+              fontSize: '0.9rem'
+            }}>
+              Shop
+            </a>
+            <Link
+              className="btn btn-outline-light position-relative"
+              to="/cart"
+              style={{
+                backgroundColor: 'transparent',
+                color: 'var(--silver)',
+                border: '1px solid rgba(255,255,255,0.2)',
+                borderRadius: '8px',
+                padding: '8px 12px',
+                fontSize: '0.9rem'
+              }}
+            >
+              <i className="bi bi-cart"></i>
+              <span
+                id="cartCount"
+                className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                style={{ fontSize: '0.7rem' }}
+              ></span>
+            </Link>
           </div>
         </div>
       </nav >
 
-      {/* Mobile navbar */}
-      <nav className="navbar navbar-dark navbar-expand-lg" id="mobileNavbar" style={{
-        backgroundColor: 'rgba(11, 9, 9, 0.9)',
-        borderTop: '2px solid red',
-        borderBottom: '2px solid red',
-        padding: '0.5rem',
-        position: 'sticky',
-        top: '0',
-        zIndex: '1000',
-        display: 'none'
-      }}>
-        <div className="container-fluid">
-
-          {/* Logo */}
-          <Link className="navbar-brand d-flex align-items-center" to="/" style={{ padding: '0', margin: '0' }}>
-            <img src={logo} style={{ width: '50px', height: '50px', objectFit: 'cover', borderRadius: '50%' }} alt="Logo" />
-          </Link>
-
-          {/* Navbar toggler */}
-          <button
-            className="navbar-toggler"
-            type="button"
-            onClick={toggleNavbar}
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-
-          {/* Collapsible links */}
-          <div className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`} id="navbarMobile">
-            <ul className="navbar-nav ms-auto text-center">
-
-              <li className="nav-item">
-                <Link className={`nav-link ${location.pathname === '/' ? 'active' : ''}`} to="/">Home</Link>
-              </li>
-
-              {categories.map(category => (
-                <li className="nav-item" key={category.id}>
-                  <Link
-                    className={`nav-link ${isActive(category.id) ? 'active' : ''}`}
-                    to={`/category?id=${category.id}`}
-                  >
-                    {category.name}
-                  </Link>
-                </li>
-              ))}
-              <li className="nav-item">
-                <Link className="nav-link" to="/category?=fivem">FiveM</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/category?=custom">Develop Own Model</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/contact">Contact Us</Link>
-              </li>
-              {loggedInUser && (
-                <li className="nav-item">
-                  <Link className="nav-link" to="/login">Admin</Link>
-                </li>
-              )}
-            </ul>
-          </div>
-
-        </div>
-      </nav>
+      {/* Banner handled by Home hero background */}
     </>
   );
 }

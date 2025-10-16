@@ -15,19 +15,6 @@ export default function Cart() {
     const [loading, setLoading] = useState(true);
     const [customData, setCustomData] = useState({});
 
-    const cartItemStyles = {
-        backgroundColor: '#1e1e1e',
-        borderRadius: '10px',
-        marginBottom: '20px',
-        padding: '20px'
-    }
-
-    const checkoutBtnStyles = {
-        backgroundColor: '#red',
-        color: '#fff',
-        border: 'none'
-    }
-
     const procedToCheckout = () => {
         // window.open(checkoutLink, '_blank')
         window.location.href = checkoutLink;
@@ -107,13 +94,13 @@ export default function Cart() {
 
     return (
         <>
-            <div>
+            <section className="cart-section" aria-labelledby="cart-title">
                 <div className="container py-5">
-                    <h2 className="mb-4 text-danger">Your Cart</h2>
+                    <h2 id="cart-title" className="mb-4">Your Cart</h2>
                     {loading ? (
                         <>
                             {Array.from({ length: 2 }).map((_, index) => (
-                                <div className="row align-items-center" style={cartItemStyles} key={index}>
+                                <div className="row align-items-center cart-item-row" key={index}>
                                     <div className="col-md-2">
                                         <svg className="bd-placeholder-img card-img-top" width="100%" height="100px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice">
                                             <title>Placeholder</title>
@@ -125,7 +112,7 @@ export default function Cart() {
                                         <p className='placeholder-glow'><span className='placeholder col-2'></span></p>
                                     </div>
                                     <div className="col-md-2 text-start placeholder-glow">
-                                        <p style={{ color: '#00ff00' }}><span className='placeholder col-12'>a</span></p>
+                                        <p><span className='placeholder col-12'>a</span></p>
                                     </div>
                                     <div className="col-md-2 text-end">
                                         <div className="cart-item row align-items-center">
@@ -149,10 +136,10 @@ export default function Cart() {
                                     const imageUrl = images[0].startsWith('http') ? images[0] : `${databaseApiUrl}uploads/${images[0]}`;
 
                                     return (
-                                        <div className="row align-items-center" key={pkg.id} style={cartItemStyles}>
+                                        <div className="row align-items-center cart-item-row" key={pkg.id}>
                                             <div className="col-md-2">
                                                 <Link to={`/package?id=${pkg.id}`}>
-                                                    <img src={imageUrl} className="img-fluid" alt={title} style={{ borderRadius: '8px', height: '100px', objectFit: 'cover' }} />
+                                                    <img src={imageUrl} className="img-fluid cart-item-image" alt={title} />
                                                 </Link>
                                             </div>
                                             <div className="col-md-6">
@@ -161,7 +148,7 @@ export default function Cart() {
                                                 </Link>
                                             </div>
                                             <div className="col-md-2 text-start">
-                                                <p style={{ color: '#00ff00' }}>Price: ${pkg.in_basket.price}</p>
+                                                <p className="price">Price: ${pkg.in_basket.price}</p>
                                             </div>
                                             <div className="col-md-2 text-end">
                                                 <div className="cart-item row align-items-center">
@@ -172,7 +159,7 @@ export default function Cart() {
                                     )
                                 })
                             ) : (
-                                <div className="row align-items-center" style={cartItemStyles}>
+                                <div className="row align-items-center cart-item-row">
                                     Your Cart is Empty! 😀
                                 </div>
                             )}
@@ -181,7 +168,7 @@ export default function Cart() {
 
                     <div className="row mt-4">
                         <div className="col-md-6 offset-md-6">
-                            <div className="p-3 border rounded-3" style={{ backgroundColor: '#1e1e1e' }}>
+                            <div className="cart-summary">
                                 <h5 className="neon-accent">Cart Summary</h5>
                                 <div className="d-flex justify-content-between">
                                     <span>Subtotal</span>
@@ -191,17 +178,17 @@ export default function Cart() {
                                     <span>Sales Tax</span>
                                     <span>${cartItems.sales_tax ? cartItems.sales_tax.toLocaleString() : 0}</span>
                                 </div>
-                                <hr style={{ borderColor: '#444' }} />
+                                <hr />
                                 <div className="d-flex justify-content-between fw-bold">
                                     <span>Total</span>
                                     <span>${cartItems.total_price ? cartItems.total_price.toLocaleString() : 0}</span>
                                 </div>
-                                <button className={`btn btn-danger w-100 mt-3 ${cartItems.packages && cartItems.packages.length > 0 ? '' : 'disabled'}`} style={checkoutBtnStyles} onClick={procedToCheckout}>Proceed to Checkout</button>
+                                <button className={`btn-checkout mt-3 ${cartItems.packages && cartItems.packages.length > 0 ? '' : 'disabled'}`} onClick={procedToCheckout}>Proceed to Checkout</button>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
         </>
     )
 }
