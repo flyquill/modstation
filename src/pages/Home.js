@@ -54,9 +54,8 @@ export default function Home() {
         </div>
 
         {/* 💡 START: Social Icons added here */}
-        <div className="social-icons">
+        {/* <div className="social-icons">
           <a href="https://discord.com/invite/bWCT4nTAJT" target="_blank" rel="noopener noreferrer" aria-label="Discord">
-            {/* Replace i tag with a proper icon component if using an icon library like 'react-icons' */}
             <i className="fab fa-discord"></i>
           </a>
           <a href="https://www.instagram.com/gtamodstation/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
@@ -68,7 +67,7 @@ export default function Home() {
           <a className="social-icon-img" href="https://www.patreon.com/cw/gtamodstation" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
             <img src={discordLogo} alt="" />
           </a>
-        </div>
+        </div> */}
         {/* 💡 END: Social Icons added here */}
       </section>
 
@@ -135,12 +134,14 @@ export default function Home() {
             <h2 id="custom-title">Built to Your Spec</h2>
             <p className="muted">Need a department‑accurate fleet or a cinematic hero vehicle? We craft bespoke models, handling lines, ELS setups, and liveries tuned for your FiveM server.</p>
             <div className="row" style={{marginTop: 'var(--space-3)'}}>
-              <span className="pill">3D Conversions</span>
-              <span className="pill">Emergency lightning</span>
-              <span className="pill">Modifications</span>
-              <span className="pill">LOD Optimization</span>
-              <span className="pill">Livery & Template</span>
-              <span className="pill">Handling & Physics</span>
+              <ul className='mx-3'>
+              <li><span className="pill w-100 my-1">3D Conversions</span></li>
+              <li><span className="pill w-100 my-1">Emergency lightning</span></li>
+              <li><span className="pill w-100 my-1">Modifications</span></li>
+              <li><span className="pill w-100 my-1">LOD Optimization</span></li>
+              <li><span className="pill w-100 my-1">Livery & Template</span></li>
+              <li><span className="pill w-100 my-1">Handling & Physics</span></li>
+              </ul>
             </div>
           </div>
           <div className="row">

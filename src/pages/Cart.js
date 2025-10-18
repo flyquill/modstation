@@ -100,7 +100,7 @@ export default function Cart() {
                     {loading ? (
                         <>
                             {Array.from({ length: 2 }).map((_, index) => (
-                                <div className="row align-items-center cart-item-row" key={index}>
+                                <div className="row align-items-center cart-item-row"  style={{gap: '0px'}} key={index}>
                                     <div className="col-md-2">
                                         <svg className="bd-placeholder-img card-img-top" width="100%" height="100px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice">
                                             <title>Placeholder</title>

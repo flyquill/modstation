@@ -190,13 +190,83 @@ export default function Package() {
 
   return (
     <>
-      {/* React Helmet (SEO way) */}
+      {/* SEO: Product metadata */}
       <Helmet>
+        <title>{`${customData?.package_title || mainPackage?.name || 'FiveM Mod'} — FiveM ${(customData?.package_category || 'Vehicle')} Mod | GTAModStation`}</title>
         <meta
           name="description"
-          content={customData && customData.package_title ? customData.package_title : mainPackage.name}
-          data-react-helmet="true"
+          content={(mainPackage?.description
+            ? mainPackage.description.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim()
+            : `Download ${(customData?.package_title || mainPackage?.name || 'FiveM Mod')} for FiveM. High-fidelity, optimized GTA V/FiveM mod from GTAModStation.`)}
         />
+        <link
+          rel="canonical"
+          href={`https://gtamodstation.com/package?id=${id}${categoryId ? `&categoryId=${categoryId}` : ''}`}
+        />
+        <meta name="robots" content="index,follow" />
+        <meta property="og:type" content="product" />
+        <meta property="og:title" content={`${customData?.package_title || mainPackage?.name || 'FiveM Mod'} — FiveM ${(customData?.package_category || 'Vehicle')} Mod | GTAModStation`} />
+        <meta property="og:description" content={(mainPackage?.description ? mainPackage.description.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim() : `Download ${(customData?.package_title || mainPackage?.name || 'FiveM Mod')} for FiveM.`)} />
+        <meta property="og:url" content={`https://gtamodstation.com/package?id=${id}${categoryId ? `&categoryId=${categoryId}` : ''}`} />
+        <meta property="og:image" content={(currentImage || (customData?.package_images?.length ? `${databaseApiUrl}uploads/${customData.package_images[0]}` : mainPackage?.image))} />
+        <meta property="og:site_name" content="GTAModStation" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${customData?.package_title || mainPackage?.name || 'FiveM Mod'} — FiveM ${(customData?.package_category || 'Vehicle')} Mod | GTAModStation`} />
+        <meta name="twitter:description" content={(mainPackage?.description ? mainPackage.description.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim() : `Download ${(customData?.package_title || mainPackage?.name || 'FiveM Mod')} for FiveM.`)} />
+        <meta name="twitter:image" content={(currentImage || (customData?.package_images?.length ? `${databaseApiUrl}uploads/${customData.package_images[0]}` : mainPackage?.image))} />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "name": customData?.package_title || mainPackage?.name || 'FiveM Mod',
+            "image": (customData?.package_images && customData.package_images.length > 0)
+              ? customData.package_images.map(img => `${databaseApiUrl}uploads/${img}`)
+              : [currentImage || mainPackage?.image].filter(Boolean),
+            "description": (mainPackage?.description
+              ? mainPackage.description.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim()
+              : `Download ${(customData?.package_title || mainPackage?.name || 'FiveM Mod')} for FiveM.`),
+            "sku": mainPackage?.id || id,
+            "brand": { "@type": "Brand", "name": "GTAModStation" },
+            "category": customData?.package_category || (categoryId ? `Category ${categoryId}` : 'Vehicle Mod'),
+            "url": `https://gtamodstation.com/package?id=${id}${categoryId ? `&categoryId=${categoryId}` : ''}`,
+            "offers": {
+              "@type": "Offer",
+              "priceCurrency": "USD",
+              "price": String(mainPackage?.base_price || mainPackage?.total_price || ""),
+              "availability": "http://schema.org/InStock",
+              "itemCondition": "https://schema.org/NewCondition",
+              "seller": { "@type": "Organization", "name": "GTAModStation" },
+              "url": `https://gtamodstation.com/package?id=${id}${categoryId ? `&categoryId=${categoryId}` : ''}`
+            },
+            ...(customData?.rating_value && {
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": String(customData.rating_value),
+                "reviewCount": Number(customData.rating_count || 1)
+              }
+            }),
+            ...(customData?.video_url && {
+              "video": {
+                "@type": "VideoObject",
+                "name": `${customData?.package_title || mainPackage?.name || 'FiveM Mod'} Showcase`,
+                "thumbnailUrl": `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
+                "embedUrl": customData.video_url,
+                "description": `${customData?.package_title || mainPackage?.name || 'FiveM Mod'} FiveM mod showcase video`
+              }
+            })
+          })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://gtamodstation.com/" },
+              { "@type": "ListItem", "position": 2, "name": "Products", "item": "https://gtamodstation.com/category" },
+              { "@type": "ListItem", "position": 3, "name": customData?.package_title || mainPackage?.name || 'FiveM Mod', "item": `https://gtamodstation.com/package?id=${id}${categoryId ? `&categoryId=${categoryId}` : ''}` }
+            ]
+          })}
+        </script>
       </Helmet>
 
       {loading ?
@@ -262,7 +332,7 @@ export default function Package() {
           {isImageFullScreen && (
             <div className="fullscreen-overlay" onClick={() => setIsImageFullScreen(false)}>
               <span className="close-btn">&times;</span>
-              <img src={currentImage} alt="Full Product" className="fullscreen-image" />
+              <img src={currentImage} alt={`${customData?.package_title || mainPackage?.name || 'FiveM Mod'} fullscreen image`} className="fullscreen-image" />
             </div>
           )}
 
@@ -281,7 +351,7 @@ export default function Package() {
                   <img
                     src={currentImage}
                     className="product-image"
-                    alt=""
+                    alt={`${customData?.package_title || mainPackage?.name || 'FiveM Mod'} product image`}
                     style={{ height: 'auto', maxHeight: '400px' }}
                     onClick={() => setIsImageFullScreen(true)}
                   />
@@ -295,12 +365,12 @@ export default function Package() {
                   {customData && customData.package_images ? customData.package_images.map((img, index) => {
                     return (
                       <button style={{ padding: '0', border: '0' }} onClick={() => setcurrentImage(`${databaseApiUrl}uploads/${img}`)} className="thumbnail-item" key={index}>
-                        <img src={`${databaseApiUrl}uploads/${img}`} alt="" className="thumbnail-image" />
+                        <img src={`${databaseApiUrl}uploads/${img}`} alt={`${customData?.package_title || mainPackage?.name || 'FiveM Mod'} image ${index + 1}`} className="thumbnail-image" loading="lazy" decoding="async" />
                       </button>
                     );
                   }) :
                     <button className="thumbnail-item" style={{ padding: '0', border: '0' }}>
-                      <img src={currentImage} alt="" className="thumbnail-image" />
+                      <img src={currentImage} alt={`${customData?.package_title || mainPackage?.name || 'FiveM Mod'} image`} className="thumbnail-image" loading="lazy" decoding="async" />
                     </button>}
 
                   {customData && customData.video_url ? (
@@ -312,8 +382,10 @@ export default function Package() {
                       {/* Image */}
                       <img
                         src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
-                        alt=""
+                        alt={`${customData?.package_title || mainPackage?.name || 'FiveM Mod'} video thumbnail`}
                         className="thumbnail-image"
+                        loading="lazy"
+                        decoding="async"
                       />
 
                       {/* YouTube Icon Overlay */}
@@ -374,7 +446,7 @@ export default function Package() {
                           {attachedAddonPackages.map(pkg => (
                             <div className="additional-section" key={pkg.id} style={{ height: '85px' }}>
                               <div className="additional-section-image-container">
-                                <img src={pkg.image} alt="" className="additional-section-image" />
+                                <img src={pkg.image} alt={`${pkg.name} addon for ${customData?.package_title || mainPackage?.name || 'FiveM Mod'}`} className="additional-section-image" loading="lazy" decoding="async" />
                               </div>
                               <div className="additional-section-text">
                                 <h2 className="additional-section-title">{pkg.name}</h2>
@@ -440,7 +512,7 @@ export default function Package() {
       <div className="container mt-4">
         <h2>More Packages</h2>
       </div>
-      <Packages key={renderKey} exceptPackage={id} category={categoryId} />
+      <Packages key={renderKey} exceptPackage={id} category={2961935} />
     </>
   )
 }

@@ -17,10 +17,10 @@ const TurnstileWidget = ({ onVerify }) => {
     const interval = setInterval(() => {
       if (window.turnstile && containerRef.current) {
         window.turnstile.render(containerRef.current, {
-          sitekey: "0x4AAAAAABz8ULW5QA-6U0Bw", // ✅ your sitekey
+          sitekey: "0x4AAAAAABz8ULW5QA-6U0Bw", // Cloudflare Turnstile sitekey
           callback: (token) => {
             console.log("Turnstile token:", token);
-            onVerify(token); // ✅ pass token back to parent
+            onVerify(token);
           },
         });
         clearInterval(interval);

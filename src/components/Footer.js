@@ -9,8 +9,7 @@ export default function Footer() {
                 <div className="container">
                     <div className="section-head">
                         <div>
-                            <p className="eyebrow">Support</p>
-                            <h2 className="faq-title">Frequently Asked Questions</h2>
+                            <h2>Frequently Asked Questions</h2>
                             <p>Everything you need to know about purchasing, installing, and requesting custom builds.</p>
                         </div>
                     </div>
@@ -77,7 +76,7 @@ export default function Footer() {
                             </h2>
                             <div id="flush-collapseThree" className="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                                 <div className="accordion-body">
-                                    You can request your own custom model <Link to="/custom">here</Link>.
+                                    You can request your own custom model <Link to="/custom" style={{color: '#2660ffff'}}>here</Link>.
                                 </div>
                             </div>
                         </div>

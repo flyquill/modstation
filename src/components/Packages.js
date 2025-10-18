@@ -150,6 +150,8 @@ export default function Packages(props) {
                                                 src={`${imageUrl}`}
                                                 className="car-image"
                                                 alt={title}
+                                                loading="lazy"
+                                                decoding="async"
                                             />
                                             <span className="category-badge">{categoryLabel}</span>
                                             <div className="image-gradient-top"></div>

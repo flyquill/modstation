@@ -55,6 +55,8 @@ export default function Packages() {
                             className="car-image"
                             alt={pkg.package_title}
                             style={{ minHeight: '259px' }}
+                            loading="lazy"
+                            decoding="async"
                         />
                         </div>
                     </Link>

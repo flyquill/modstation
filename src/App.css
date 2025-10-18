@@ -800,7 +800,6 @@ section {
 
 .row {
   display: flex;
-  gap: .75rem;
   flex-wrap: wrap;
 }
 
@@ -1022,4 +1021,160 @@ section {
     transition: none !important;
     scroll-behavior: auto;
   }
+}
+
+/* Custom styles for redesigned CustomMods and Contact pages */
+.custom-page {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background: #07070a;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 16px;
+}
+
+.custom-bg-layers {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.bg-pulse-layer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(18,30,64,0.15) 50%, rgba(64,0,0,0.15) 100%);
+  animation: pulseBg 6s ease-in-out infinite;
+}
+
+.bg-spin-layer {
+  position: absolute;
+  width: 120%;
+  height: 120%;
+  filter: blur(40px);
+  transform-origin: center;
+  animation: spin 40s linear infinite;
+}
+.bg-spin-layer.blue {
+  top: -50%;
+  left: 50%;
+  background: radial-gradient(circle at center, rgba(0, 100, 255, 0.16), transparent 70%);
+}
+.bg-spin-layer.red {
+  bottom: -50%;
+  right: 50%;
+  background: radial-gradient(circle at center, rgba(255, 0, 64, 0.12), transparent 70%);
+}
+.bg-spin-layer.reverse { animation-direction: reverse; animation-duration: 60s; }
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulseBg {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+.custom-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 960px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 32px;
+}
+
+.gradient-text {
+  font-weight: 800;
+  font-size: 32px;
+  background: linear-gradient(90deg, #60a5fa, #fb7185);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.subtext { color: #b0b7c3; }
+
+/* Inputs styling */
+.custom-card .form-label { color: #d0d6e1; font-weight: 600; }
+.custom-input,
+.custom-select,
+.custom-textarea {
+  background: rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #e6edf5;
+}
+.custom-input:focus,
+.custom-select:focus,
+.custom-textarea:focus {
+  color: #fff;
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 0.2rem rgba(96,165,250,0.25);
+  background: rgba(0,0,0,0.55);
+}
+.form-select.custom-select:focus {
+  border-color: #fb7185;
+  box-shadow: 0 0 0 0.2rem rgba(251,113,133,0.25);
+}
+.custom-textarea { resize: vertical; }
+
+.file-input::file-selector-button {
+  margin-right: 12px;
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 8px;
+  background: rgba(37,99,235,0.85);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+.file-input::file-selector-button:hover { background: rgba(59,130,246,0.95); }
+
+.custom-help-text { color: #9aa3ad; font-size: 12px; }
+
+.gradient-btn {
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-weight: 700;
+  color: #0d0d0f;
+  background: linear-gradient(90deg, #3b82f6, #ef4444);
+  box-shadow: 0 12px 30px rgba(239, 68, 68, 0.35);
+  border: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.gradient-btn:hover {
+  transform: scale(1.02);
+  box-shadow: 0 16px 36px rgba(239, 68, 68, 0.5);
+}
+.gradient-btn:active { transform: scale(0.98); }
+/* Placeholders: white, no glow */
+.custom-input::placeholder,
+.custom-textarea::placeholder {
+  color: #ffffff;
+  text-shadow: none;
+  opacity: 0.95;
+}
+/* Base input text: white, glow only when typed */
+.custom-input,
+.custom-textarea {
+  color: #ffffff;
+  caret-color: #ffffff;
+}
+
+/* Select: muted default, glow when a value is chosen */
+.form-select.custom-select option[disabled],
+.form-select.custom-select option[value=""] {
+  color: rgba(255, 255, 255, 0.8);
+}
+.custom-select.has-value {
+  color: #ffffff;
+  text-shadow: 0 0 2px rgba(255, 255, 255, 0.9), 0 0 6px rgba(255, 255, 255, 0.35);
 }

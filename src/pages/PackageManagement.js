@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 export default function UploadPackageForm() {
     const [title, setTitle] = useState('');
@@ -140,89 +141,109 @@ export default function UploadPackageForm() {
         return <div className="text-center mt-5">Loading package...</div>;
     }
 
+    const canonicalUrl = 'https://gtamodstation.com' + location.pathname + location.search;
+
     return (
-        <div className="container mt-5" style={{ maxWidth: '600px' }}>
-            <h2 className="text-center mb-4">Upload Package</h2>
-            <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                    <label className="form-label" htmlFor='package_title'>Package Title:</label>
-                    <div className='row row-cols-2'>
-                        <div className='col-md-11' style={{paddingRight: '0px'}}>
-                            <input
-                                id='package_title'
-                                type="text"
-                                className="form-control"
-                                value={title}
-                                onChange={(e) => setTitle(e.target.value)}
-                                required
-                                style={{paddingRight: '0px', borderRadius: '0.375rem 0px 0px 0.375rem'}}
-                            />
-                        </div>
-                        <div className='col-md-1' style={{paddingLeft: '0px'}}>
-                            <button onClick={()=>{setTitle(originalTitle)}} type='button' className='btn btn-warning' 
-                            style={{padding: '6px 9px', borderRadius: '0px 0.375rem 0.375rem 0px'}}>
-                                <i className="bi bi-arrow-clockwise"></i>
-                            </button>
+        <>
+            <Helmet>
+                <title>Package Management | GTA ModStation</title>
+                <meta name="description" content="Upload and manage GTA ModStation packages: titles, images, videos, and links for free packages." />
+                <link rel="canonical" href={canonicalUrl} />
+                <meta name="robots" content="noindex,nofollow" />
+                <meta property="og:type" content="website" />
+                <meta property="og:title" content="Package Management | GTA ModStation" />
+                <meta property="og:description" content="Upload and manage GTA ModStation packages: titles, images, videos, and links for free packages." />
+                <meta property="og:url" content={canonicalUrl} />
+                <meta property="og:image" content="https://gtamodstation.com/logo512.png" />
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content="Package Management | GTA ModStation" />
+                <meta name="twitter:description" content="Upload and manage GTA ModStation packages: titles, images, videos, and links for free packages." />
+                <meta name="twitter:image" content="https://gtamodstation.com/logo512.png" />
+            </Helmet>
+            <div className="container mt-5" style={{ maxWidth: '600px' }}>
+                <h2 className="text-center mb-4">Upload Package</h2>
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                        <label className="form-label" htmlFor='package_title'>Package Title:</label>
+                        <div className='row row-cols-2'>
+                            <div className='col-md-11' style={{paddingRight: '0px'}}>
+                                <input
+                                    id='package_title'
+                                    type="text"
+                                    className="form-control"
+                                    value={title}
+                                    onChange={(e) => setTitle(e.target.value)}
+                                    required
+                                    style={{paddingRight: '0px', borderRadius: '0.375rem 0px 0px 0.375rem'}}
+                                />
+                            </div>
+                            <div className='col-md-1' style={{paddingLeft: '0px'}}>
+                                <button onClick={()=>{setTitle(originalTitle)}} type='button' className='btn btn-warning' 
+                                style={{padding: '6px 9px', borderRadius: '0px 0.375rem 0.375rem 0px'}}>
+                                    <i className="bi bi-arrow-clockwise"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                {existingImages.length > 0 && (
-                    <div className="mb-3">
-                        <label className="form-label">Existing Images:</label>
-                        <div className="row">
-                            {existingImages.map((img, index) => (
-                                <div className="col-6 col-md-4 mb-3" key={index}>
-                                    <div className="card">
-                                        <img
-                                            src={`${databaseApiUrl}uploads/${img}`}
-                                            className="card-img-top"
-                                            alt={`Existing ${index}`}
-                                            style={{ height: '150px', objectFit: 'cover' }}
-                                        />
-                                        <div className="card-body text-center p-2">
-                                            <button
-                                                type="button"
-                                                className="btn btn-sm btn-danger"
-                                                onClick={() => handleDeleteImage(index)}
-                                            >
-                                                Delete
-                                            </button>
+                    {existingImages.length > 0 && (
+                        <div className="mb-3">
+                            <label className="form-label">Existing Images:</label>
+                            <div className="row">
+                                {existingImages.map((img, index) => (
+                                    <div className="col-6 col-md-4 mb-3" key={index}>
+                                        <div className="card">
+                                            <img
+                                                src={`${databaseApiUrl}uploads/${img}`}
+                                                className="card-img-top"
+                                                alt={`${title || 'Package'} image ${index + 1}`}
+                                                loading="lazy"
+                                                style={{ height: '150px', objectFit: 'cover' }}
+                                            />
+                                            <div className="card-body text-center p-2">
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-sm btn-danger"
+                                                    onClick={() => handleDeleteImage(index)}
+                                                >
+                                                    Delete
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            ))}
+                                ))}
+                            </div>
                         </div>
+                    )}
+
+                    <div className="mb-3">
+                        <label className="form-label">Select New Images:</label>
+                        <input
+                            type="file"
+                            className="form-control"
+                            multiple
+                            onChange={handleImageChange}
+                            accept="image/*"
+                        />
                     </div>
-                )}
 
-                <div className="mb-3">
-                    <label className="form-label">Select New Images:</label>
-                    <input
-                        type="file"
-                        className="form-control"
-                        multiple
-                        onChange={handleImageChange}
-                        accept="image/*"
-                    />
-                </div>
+                    <div className="mb-3">
+                        <label className="form-label">Video Url:</label>
+                        <input type="text" className="form-control" value={videoUrl} onChange={(e) => setVideoUrl(e.target.value)}/>
+                    </div>
 
-                <div className="mb-3">
-                    <label className="form-label">Video Url:</label>
-                    <input type="text" className="form-control" value={videoUrl} onChange={(e) => setVideoUrl(e.target.value)}/>
-                </div>
+                    <div className="mb-3">
+                        <label className="form-label">Google Drive Link (Only for Free Packages):</label>
+                        <input type="text" className="form-control" value={googleDriveLink} onChange={(e) => setGoogleDriveLink(e.target.value)}/>
+                    </div>
 
-                <div className="mb-3">
-                    <label className="form-label">Google Drive Link (Only for Free Packages):</label>
-                    <input type="text" className="form-control" value={googleDriveLink} onChange={(e) => setGoogleDriveLink(e.target.value)}/>
-                </div>
-
-                <div className="text-center">
-                    <button type="submit" className="btn btn-success">
-                        Save Package
-                    </button>
-                </div>
-            </form>
-        </div>
+                    <div className="text-center">
+                        <button type="submit" className="btn btn-success">
+                            Save Package
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </>
     );
 }

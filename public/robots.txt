@@ -1,3 +1,15 @@
-# https://www.robotstxt.org/robotstxt.html
+# robots.txt for GTAModStation
+# Allow crawling of public pages; block sensitive or non-index pages.
+
 User-agent: *
-Disallow:
+Allow: /
+
+# Disallow admin/auth/cart flows
+Disallow: /login
+Disallow: /auth
+Disallow: /cart
+Disallow: /packageManagement
+Disallow: /thank-you
+
+# Sitemap
+Sitemap: https://gtamodstation.com/sitemap.xml

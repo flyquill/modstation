@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { getCookie, setCookie } from '../utils/cartUtils';
+import { Helmet } from 'react-helmet-async';
+import { useLocation } from 'react-router-dom';
 
 export default function Auth() {
   const token = process.env.REACT_APP_TEBEX_PUBLIC_API_KEY;
   const [loading, setLoading] = useState(false);
   const [authUrl, setAuthUrl] = useState('');
+  const location = useLocation();
+  const canonicalUrl = 'https://gtamodstation.com' + location.pathname;
 
   useEffect(() => {
     const fetchAuthUrl = async () => {
@@ -65,6 +69,21 @@ export default function Auth() {
 
   return (
     <div className="container my-5">
+      <Helmet>
+        <title>Authorize FiveM | GTA ModStation</title>
+        <meta name="description" content="Login via CFX.re to link your FiveM account, verify your basket, and continue checkout on GTA ModStation." />
+        <link rel="canonical" href={canonicalUrl} />
+        <meta name="robots" content="noindex,nofollow" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Authorize FiveM | GTA ModStation" />
+        <meta property="og:description" content="Login via CFX.re to link your FiveM account, verify your basket, and continue checkout on GTA ModStation." />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:image" content="https://gtamodstation.com/logo512.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Authorize FiveM | GTA ModStation" />
+        <meta name="twitter:description" content="Login via CFX.re to link your FiveM account, verify your basket, and continue checkout on GTA ModStation." />
+        <meta name="twitter:image" content="https://gtamodstation.com/logo512.png" />
+      </Helmet>
       <h3 className="my-5">Please login using your CFX.re account so we can identify you in game</h3>
       <button className="btn btn-success d-flex align-items-center gap-2" onClick={handleAuthorize} disabled={loading}>
         {loading && (
