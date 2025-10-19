@@ -38,19 +38,18 @@ export default function Navbar() {
           {/* Brand Logo */}
           <Link className="navbar-brand d-flex align-items-center" to="/" style={{ padding: '0', margin: '0' }}>
             <div className="brand-icon" style={{
-              width: '32px',
-              height: '32px',
-              backgroundColor: 'var(--primary)',
+              width: '40px',
+              height: '40px',
               borderRadius: '6px',
               marginRight: '12px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center'
             }}>
-              <span style={{ color: '#031018', fontWeight: 'bold', fontSize: '14px' }}>GTA</span>
+              <span> <img src={logo} alt="" /> </span>
             </div>
             <span style={{ 
-              color: 'var(--primary)', 
+              color: 'var(--white)', 
               fontWeight: '900', 
               fontSize: '1.2rem',
               letterSpacing: '0.05em'
@@ -61,7 +60,7 @@ export default function Navbar() {
 
           {/* Navigation Links */}
           <div className="navbar-nav d-flex flex-row gap-4">
-            <Link className={`nav-link ${location.pathname === '/' ? 'active' : ''}`} to="/">Home</Link>
+            <a className={`nav-link ${location.pathname === '/' ? 'active' : ''}`} href="/#hero">Home</a>
             <button
               className={`nav-link btn-link`}
               // style={{ background: 'none', border: 'none', padding: 0, color: 'inherit', cursor: 'pointer' }}
@@ -77,7 +76,7 @@ export default function Navbar() {
               Featured
             </button>
             <button
-              className="nav-link"
+              className={`nav-link ${location.pathname === '/categories' ? 'active' : ''}`}
               onClick={() => {
                 if (window.location.pathname !== "/") {
                   window.location.href = "/#categories";
@@ -91,7 +90,7 @@ export default function Navbar() {
             >
               Categories
             </button>
-            <Link className="nav-link" to="/about">About</Link>
+            <Link className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`} to="/about">About</Link>
             <button
               className="nav-link"
               onClick={() => {
@@ -111,7 +110,15 @@ export default function Navbar() {
 
           {/* Action Buttons */}
           <div className="d-flex gap-3">
-            <button className="btn btn-primary nav-action" onClick={()=>{window.location.href = '/#custom'}} style={{
+            <button className="btn btn-primary nav-action" 
+            onClick={() => {
+                if (window.location.pathname === "/") {
+                  window.location.href = "/#custom";
+                } else {
+                  window.location.href = "/custom";
+                }
+              }} 
+            style={{
               backgroundColor: 'var(--primary)',
               color: '#031018',
               border: 'none',

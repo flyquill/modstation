@@ -343,6 +343,8 @@ p {
     display: flex;      /* Use flexbox to space the icons out */
     gap: 15px;          /* Space between the icons */
     z-index: 10;        /* Ensure the icons are above other content */
+    transform: scale(1.1);
+    align-items: center;
 }
 
 /*

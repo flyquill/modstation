@@ -23,8 +23,8 @@ const CarModelRequest = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [canSubmit, setCanSubmit] = useState(true);
 
-  const MAX_FILES = 3;
-  const MAX_FILE_SIZE_MB = 40;
+  const MAX_FILES = 5;
+  const MAX_FILE_SIZE_MB = 50;
   const COOKIE_NAME = "last_request_time";
 
   const setCookie = (name, value, hours) => {
@@ -215,6 +215,9 @@ const CarModelRequest = () => {
                   <option value="vehicle">Vehicle</option>
                   <option value="utility">Utility</option>
                   <option value="military">Military</option>
+                  <option value="modifications">Modifications</option>
+                  <option value="log_optimization">LOD Optimization</option>
+                  <option value="livery_template">Livery & Template</option>
                 </select>
               </div>
             </div>

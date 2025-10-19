@@ -1,6 +1,9 @@
 import React from 'react'
 import bannerImage from '../images/home.jpg'
 import discordLogo from '../images/discord.png';
+import youtubeLogo from '../images/youtube.png';
+import patreonLogo from '../images/patreon.png';
+import instagramLogo from '../images/instagram.png';
 import Packages from '../components/Packages'
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { setCookie } from '../utils/cartUtils';
@@ -29,6 +32,7 @@ export default function Home() {
     <>
       {/* Hero Section */}
       <section
+        id="hero"
         className="hero"
         aria-label="Cinematic showcase banner"
         style={{
@@ -54,10 +58,7 @@ export default function Home() {
         </div>
 
         {/* 💡 START: Social Icons added here */}
-        {/* <div className="social-icons">
-          <a href="https://discord.com/invite/bWCT4nTAJT" target="_blank" rel="noopener noreferrer" aria-label="Discord">
-            <i className="fab fa-discord"></i>
-          </a>
+        <div className="social-icons">
           <a href="https://www.instagram.com/gtamodstation/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
             <i className="fab fa-instagram"></i>
           </a>
@@ -65,9 +66,12 @@ export default function Home() {
             <i className="fab fa-youtube"></i>
           </a>
           <a className="social-icon-img" href="https://www.patreon.com/cw/gtamodstation" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-            <img src={discordLogo} alt="" />
+            <img src={patreonLogo} alt="" />
           </a>
-        </div> */}
+          <a href="https://discord.com/invite/bWCT4nTAJT" target="_blank" rel="noopener noreferrer" aria-label="Discord">
+            <i className="fab fa-discord"></i>
+          </a>
+        </div>
         {/* 💡 END: Social Icons added here */}
       </section>
 
@@ -81,9 +85,9 @@ export default function Home() {
               <p>Lore-Friendly, Working dials, Optimized models, Optimized textures, Authentic liveries. Ready for your next patrol, pursuit, race, or ride.</p>
             </div>
             <div className="row">
-              <span className="pill">Lore-Friendly</span>
-              <span className="pill">Optimized</span>
-              <span className="pill">FiveM-Ready</span>
+              <span className="pill mb-1">Lore-Friendly</span>
+              <span className="pill mb-1">Optimized</span>
+              <span className="pill mb-1">FiveM-Ready</span>
             </div>
           </div>
           <Packages exceptPackage={false} category={3109091} />
@@ -133,8 +137,8 @@ export default function Home() {
             <p className="eyebrow">Custom Orders</p>
             <h2 id="custom-title">Built to Your Spec</h2>
             <p className="muted">Need a department‑accurate fleet or a cinematic hero vehicle? We craft bespoke models, handling lines, ELS setups, and liveries tuned for your FiveM server.</p>
-            <div className="row" style={{marginTop: 'var(--space-3)'}}>
-              <ul className='mx-3'>
+            <div className="row" style={{marginTop: 'var(--space-3)', gap: '0'}}>
+              <ul className='mx-3 mb-0'>
               <li><span className="pill w-100 my-1">3D Conversions</span></li>
               <li><span className="pill w-100 my-1">Emergency lightning</span></li>
               <li><span className="pill w-100 my-1">Modifications</span></li>
@@ -144,8 +148,8 @@ export default function Home() {
               </ul>
             </div>
           </div>
-          <div className="row">
-            <Link className="cta" to="/custom">Request Build</Link>
+          <div className="row mt-0" style={{gap: 0}}>
+            <Link className="cta mb-2" to="/custom">Request Build</Link>
             <a className="cta cta--ghost" href="https://discord.com/invite/bWCT4nTAJT" target="_blank" rel="noopener noreferrer">Make a ticket on discord</a>
           </div>
         </div>
