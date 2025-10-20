@@ -3,6 +3,7 @@ import mainImage from '../images/home.jpg';
 // import mobileBanner from '../images/mobile.jpg';
 import logo from '../images/logo.png';
 import { Link, useLocation } from 'react-router-dom';
+import MobileNavbar from './MobileNavbar'
 
 export default function Navbar() {
   const location = useLocation();
@@ -24,7 +25,7 @@ export default function Navbar() {
   return (
     <>
       {/* Top Navigation Bar */}
-      <nav className="navbar navbar-dark navbar-expand-lg" id='desktopNavbar' style={{
+      <nav className="navbar navbar-dark navbar-expand-lg d-none d-md-block" id='desktopNavbar' style={{
         backgroundColor: 'transparent',
         border: 'none',
         padding: '1rem 0',
@@ -163,7 +164,11 @@ export default function Navbar() {
         </div>
       </nav >
 
+      <MobileNavbar />
+
       {/* Banner handled by Home hero background */}
+
+      
     </>
   );
 }
